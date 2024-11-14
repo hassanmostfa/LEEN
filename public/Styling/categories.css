@@ -1,0 +1,73 @@
+/*Start Drag and Drop */
+.drop-area {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.drop-area:hover {
+    background-color: #f1f1f1;
+}
+
+.browse-text {
+    color: #007bff;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.image-preview {
+    margin-top: 10px;
+}
+
+.image-preview img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    margin-top: 10px;
+}
+
+.logo-image-preview img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+    margin-top: 10px;
+}
+
+.banner-image-preview img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+    margin-top: 10px;
+}
+
+/*End Drag and Drop */
+
+/*Start Upadte Category Image*/
+.image-upload-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.image-upload-btn {
+    position: absolute;
+    bottom: 90px;
+    right: 100px;
+    font-size: 12px;
+}
+
+#category_image_preview {
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#category_image_preview:hover {
+    opacity: 0.8;
+}
+
+/*End Upadte Category Image*/
