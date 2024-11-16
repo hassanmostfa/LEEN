@@ -31,8 +31,8 @@
 @endif
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white">
-    <a class="navbar-brand" href="{{ route('home')}}">LEEN Logo</a>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #2f3e3b;">
+    <a class="navbar-brand text-white" href="{{ route('home')}}">LEEN Logo</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -40,10 +40,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home')}}#homeServices">خدمات المنزل</a>
+                    <a class="nav-link text-white" href="{{ route('home')}}#homeServices">خدمات المنزل</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home')}}#studioServices">خدمات الاستوديو</a>
+                    <a class="nav-link text-white" href="{{ route('home')}}#studioServices">خدمات الاستوديو</a>
                 </li>
             </ul>
         </div>
@@ -68,7 +68,7 @@
             <div class="card shadow px-3">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-sm-8">
+                        <div class="col-sm-6">
                             <div class="row flex-column">
                                 <h1>{{ $studioService->name }}</h1>
                                 <span>كود الخدمة: {{ $studioService->id }}</span>
@@ -89,7 +89,7 @@
 
                             <!-- Service Details -->
                             <div class="description mb-4">
-                                <h2 class="section-title">تفاصيل الخدمة:</h2>
+                                <h2 class="section-title" style="color: #2f3e3b !important;">تفاصيل الخدمة:</h2>
                                 @foreach (json_decode($studioService->service_details) as $detail)
                                     <p class="text-justify text-secondary">{{ $detail }}</p>
                                 @endforeach
@@ -97,12 +97,12 @@
                             <hr/>
 
                             <div class="owner mb-4" style="font-size: 18px;line-height: 32px;">
-                                <h2 class="font-weight-bold" style="color: #89314f !important;">عن البائع: </h2>
+                                <h2 class="font-weight-bold" style="color: #2f3e3b !important;">عن البائع: </h2>
                                 <div class="d-flex align-items-center justify-content-start gap-2 my-4">
                                     <img style="width: 70px;height: 70px;" class="rounded-circle img-fluid ml-2" src="{{ asset($studioService->seller->seller_logo )}}" alt="Seller Image">
                                     <h5 class="ml-3 font-weight-bold my-0">الاسم : {{$studioService->seller->first_name}} {{$studioService->seller->last_name}}</h5>
-                                    <span class="ml-3"><i class="fas fa-envelope ml-2" style="color: #89314f !important;"></i> البريد الالكتروني : {{$studioService->seller->email}}</span>
-                                    <span><i class="fas fa-star ml-2" style="color: #89314f !important;"></i> التقييم : 
+                                    <span class="ml-3"><i class="fas fa-envelope ml-2" style="color: ##2f3e3b !important;"></i> البريد الالكتروني : {{$studioService->seller->email}}</span>
+                                    <span><i class="fas fa-star ml-2" style="color: ##2f3e3b !important;"></i> التقييم : 
                                     @if ($sellerAverageRating)
                                         {{ $sellerAverageRating }} / 5
                                     @else
@@ -114,60 +114,60 @@
                         </div>
 
                         <!-- Booking Section -->
-                        <div class="col-sm-4">
-                        <div class="card shadow">
-                            <div class="card-header bg-white">
-                                <h6 class="card-title mb-0">حجز الوحدة</h6>
-                            </div>
-                            <div class="card-body">
-                            <form action="{{ route('customer.bookStudioService') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="studio_service_id" value="{{ $studioService->id }}">
-                                <input type="hidden" name="seller_id" value="{{ $studioService->seller_id }}">
+                        <div class="col-sm-6">
+                            <div class="card shadow">
+                                <div class="card-header bg-white">
+                                    <h6 class="card-title mb-0 text-center">حجز الخدمة</h6>
+                                </div>
+                                <div class="card-body">
+                                <form action="{{ route('customer.bookStudioService') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="studio_service_id" value="{{ $studioService->id }}">
+                                    <input type="hidden" name="seller_id" value="{{ $studioService->seller_id }}">
 
-                                <!-- Date, Start Time, and End Time Inputs -->
-                                <div class="mb-3">
-                                    <label for="date" class="form-label">التاريخ</label>
-                                    <input type="text" name="date" id="date" class="form-control flatpickr" placeholder="اختر التاريخ" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="start_time" class="form-label">وقت البدء</label>
-                                    <input type="time" name="start_time" class="form-control" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="end_time" class="form-label">وقت الانتهاء</label>
-                                    <input type="time" name="end_time" class="form-control" required>
-                                </div>
-
-                                <!-- Employee Selection -->
-                                <div class="mb-3">
-                                    <label for="employee" class="form-label">الموظف</label>
-                                    <select class="form-control" name="employee_id" required>
-                                        <option value="" disabled selected>اختر الموظف</option>
-                                        @foreach ($employees as $id => $name)
-                                            <option value="{{ $id }}">{{ $name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <!-- Payment Amount -->
-                                <div class="mb-3">
-                                    <label for="paid_amount" class="form-label">مبلغ الدفع</label>
-                                    <input type="number" name="paid_amount" id="paid_amount" class="form-control" placeholder="ادفع مبلغ أو كامل السعر" required>
-                                </div>
-
-                                <!-- Total Price Display -->
-                                <div class="mb-3">
-                                    <label for="price" class="form-label">السعر الإجمالي</label>
-                                    <div class="form-control-plaintext border rounded bg-light p-2" id="price">
-                                        {{ $studioService->price }} ريال سعودي
+                                    <!-- Date, Start Time, and End Time Inputs -->
+                                    <div class="mb-3">
+                                        <label for="date" class="form-label">التاريخ</label>
+                                        <input type="text" name="date" id="date" class="form-control flatpickr" placeholder="اختر التاريخ" required>
                                     </div>
-                                </div>
 
-                                <button type="submit" class="btn btn-primary">احجز الآن</button>
-                            </form>
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6">
+                                            <label for="start_time" class="form-label">وقت البدء</label>
+                                            <input type="time" name="start_time" class="form-control" required>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="end_time" class="form-label">وقت الانتهاء</label>
+                                            <input type="time" name="end_time" class="form-control" required>
+                                        </div>
+                                    </div>
+
+                                    <!-- Employee Selection -->
+                                    <div class="mb-3">
+                                        <label for="employee" class="form-label">الموظف</label>
+                                        <select class="form-control" name="employee_id" required>
+                                            <option value="" disabled selected>اختر الموظف</option>
+                                            @foreach ($employees as $id => $name)
+                                                <option value="{{ $id }}">{{ $name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <!-- Payment Amount -->
+                                    <div class="mb-3">
+                                        <label for="paid_amount" class="form-label">مبلغ الدفع</label>
+                                        <input type="number" name="paid_amount" id="paid_amount" class="form-control" placeholder="ادفع مبلغ أو كامل السعر" required>
+                                    </div>
+
+                                    <!-- Total Price Display -->
+                                    <div class="mb-3">
+                                        <label for="price" class="form-label"> السعر الإجمالي : {{ $studioService->price }}</label>
+                                    </div>
+
+                                    <button type="submit" class="btn" style="background-color: #2f3e3b; color: #fff;">احجز الآن</button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
                 </div>
                         </div>
                     </div>

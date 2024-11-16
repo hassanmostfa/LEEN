@@ -13,20 +13,22 @@
         body {
             direction: rtl;
             font-family: 'Almarai', sans-serif;
+            background-color: #f9fafb;
         }
         .section-title {
             margin-top: 20px;
             font-size: 1.5rem;
             font-weight: bold;
             color: #333;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{{ route('home')}}">LEEN Logo</a>
+<nav class="navbar navbar-expand-lg navbar-light text-white" style="background-color: #2f3e3b;">
+    <a class="navbar-brand text-white" href="{{ route('home')}}">LEEN Logo</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -34,10 +36,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#homeServices">خدمات المنزل</a>
+                    <a class="nav-link text-white" href="#homeServices">خدمات المنزل</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#studioServices">خدمات الاستوديو</a>
+                    <a class="nav-link text-white" href="#studioServices">خدمات الاستوديو</a>
                 </li>
             </ul>
         </div>
@@ -61,12 +63,12 @@
     <div class="row">
         @foreach($homeServices as $service)
         <div class="col-md-4">
-            <div class="card mb-4">
-                <img src="https://via.placeholder.com/300x200?text=Studio+Service+3" class="card-img-top" alt="{{ $service->name }}">
-                <div class="card-body">
+            <div class="card mb-4 shadow">
+                <img src="{{ asset($service->seller->seller_logo) ?? 'https://via.placeholder.com/300x200?text=Home+Service+1' }}" class="card-img-top" alt="{{ $service->name }}">
+                <div class="card-body text-right">
                     <h5 class="card-title">{{ $service->name }}</h5>
-                    <p class="card-text">{{ $service->price }}</p>
-                    <a href="{{ route('homeService.show', $service->id) }}" class="btn btn-primary">عرض المزيد</a>
+                    <p class="card-text">السعر : {{ $service->price }} ريال</p>
+                    <a href="{{ route('homeService.show', $service->id) }}" class="btn" style="background-color: #2f3e3b; color: white;">احجز الان</a>
                 </div>
             </div>
         </div>
@@ -80,12 +82,12 @@
     <div class="row">
         @foreach($studioServices as $service)
         <div class="col-md-4">
-            <div class="card mb-4">
-                <img src="https://via.placeholder.com/300x200?text=Studio+Service+3" class="card-img-top" alt="{{ $service->name }}">
-                <div class="card-body">
+            <div class="card mb-4 shadow">
+                <img src="{{ asset($service->seller->seller_logo) ?? 'https://via.placeholder.com/300x200?text=Studio+Service+1' }}" class="card-img-top" alt="{{ $service->name }}">
+                <div class="card-body text-right">
                     <h5 class="card-title">{{ $service->name }}</h5>
-                    <p class="card-text">{{ $service->price }}</p>
-                    <a href="{{ route('studioService.show', $service->id) }}" class="btn btn-primary">عرض المزيد</a>
+                    <p class="card-text"> السعر : {{ $service->price }} ريال </p>
+                    <a href="{{ route('studioService.show', $service->id) }}" class="btn" style="background-color: #2f3e3b; color: white;">احجز الان</a>
                 </div>
             </div>
         </div>
