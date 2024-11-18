@@ -11,8 +11,11 @@ use App\Models\Sellers\Seller;
 use App\Models\Sellers\Employee;
 use App\Models\Sellers\HomeService;
 use App\Models\Sellers\StudioService;
+use App\Models\Sellers\Image;
+use App\Models\Sellers\Reel;
 
 use App\Models\Customers\Rating;
+
 
 
 
@@ -26,7 +29,13 @@ class HomeController extends Controller
             // Get All Studio Services
             $studioServices = StudioService::all();
 
-            return view('home', compact('homeServices' , 'studioServices'));
+            // get All Sellers Services images
+            $images = Image::all();
+
+            // get All Sellers Services Reels
+            $reels = Reel::all();
+
+            return view('home', compact('homeServices' , 'studioServices' , 'images' , 'reels'));
         } catch (\Throwable $th) {
             return redirect()->route('home')->with('error', $th->getMessage());
         }
