@@ -241,7 +241,10 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <h5 style="color: #2f3e3b !important;">المعرض</h5>
+               <div class="d-flex align-items-center gap-3 read_bt mb-3 ">
+                   <h5 class="mb-0 p-0" style="color: #2f3e3b !important;">المعرض</h5>
+               <a href="#" class="signIn">مشاهدة الكل</a>
+            </div>
                 <h1 class="customer_taital">هنا يمكنك مشاهدة الصور الخاصة بنا</h1>
             </div>
         </div>
@@ -365,7 +368,10 @@
    <div class="container">
       <div class="row">
          <div class="col-sm-12">
-            <h5 style="color: #2f3e3b !important;">الريلز</h5>
+            <div class="d-flex align-items-center gap-3 read_bt mb-3 ">
+               <h5 class="p-0 m-0" style="color: #2f3e3b !important;">الريلز</h5>
+               <a href="#" class="signIn">مشاهدة الكل</a>
+            </div>
             <h1 class="customer_taital">هنا يمكنك مشاهدة الريلز الخاصة بالخدمات</h1>
          </div>
       </div>
@@ -498,7 +504,7 @@
                </div>
             </div>
             <div class="social_icon">
-               <ul>
+               <!-- <ul>
                   <li>
                      <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                   </li>
@@ -511,7 +517,7 @@
                   <li>
                      <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                   </li>
-               </ul>
+               </ul> -->
             </div>
          </div>
       </div>

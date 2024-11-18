@@ -335,7 +335,7 @@ button {
 }
 
 .read_bt {
-    width: 170px;
+    width: 190px;
     float: right;
     padding-top: 30px;
 }
@@ -848,11 +848,13 @@ body.modal-open {
 .address_bt {
     width: 100%;
     float: right;
+    opacity: 0.7;
 }
 
 .address_bt ul {
     margin: 0px;
     padding: 0px;
+    opacity: 0.8;
 }
 
 .address_bt li {
@@ -904,7 +906,7 @@ body.modal-open {
 }
 
 .social_icon {
-    width: 50%;
+    width: 100%;
     margin: 0 auto;
     text-align: center;
     padding-top: 40px;
