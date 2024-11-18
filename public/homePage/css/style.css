@@ -612,8 +612,8 @@ button {
     width: 100%;
     float: right;
     font-size: 16px;
-    color: #2f3e3b;
-    background-color: #f5ddb6;
+    color: #fff;
+    background-color: #2f3e3b;
     text-align: center;
     padding: 10px 0px;
     border-radius: 5px;
@@ -736,6 +736,90 @@ button {
 
 /* Gallary section end */
 
+/* Reel section start*/
+.reels-wrapper {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 20px 0;
+    position: relative;
+ }
+ 
+ .reels-container {
+    display: flex;
+    gap: 15px;
+ }
+ 
+ .reel-item {
+    display: inline-block;
+    width: 150px;
+    height: 280px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+ }
+ 
+ .reel-item:hover {
+    transform: scale(1.05);
+ }
+ 
+ .reel-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+ }
+ 
+ .reel-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+ }
+ 
+ .reel-title {
+    margin: 0;
+    font-weight: bold;
+ }
+ 
+ .reels-wrapper::-webkit-scrollbar {
+    height: 10px;
+ }
+ 
+ .reels-wrapper::-webkit-scrollbar-thumb {
+    background: #2f3e3b;
+    border-radius: 5px;
+ }
+ 
+ .reels-wrapper::-webkit-scrollbar-track {
+    background: #f1f1f1;
+ }
+
+ 
+.reel-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    outline: none; /* Removes focus outlines */
+}
+
+
+.reels-wrapper {
+    overflow-x: auto; /* Horizontal scroll only */
+    overflow-y: hidden; /* Disable vertical scroll */
+}
+
+
+body.modal-open {
+    overflow: hidden; /* Prevent body scroll when modal is open */
+}
+
+/* Reel section End*/
 
 /* footer section start */
 
@@ -838,7 +922,7 @@ button {
 .social_icon li {
     float: right;
     font-size: 26px;
-    color: #fff;
+    color: #f5ddb6;
     padding: 10px;
 }
 
@@ -847,7 +931,7 @@ button {
 }
 
 .social_icon li a:hover {
-    color: #fff;
+    color: #ffffff;
 }
 
 

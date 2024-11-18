@@ -173,12 +173,12 @@
       <!-- End Offer Section -->
 
       <!-- Home Services section start -->
-      <div class="product_section layout_padding" id="homeServics" >
+      <div class="product_section layout_padding" style="background-color: #f7f1e5 !important;" id="homeServics" >
          <div class="container">
             <div class="row">
                <div class="col-sm-12">
-                  <h1 class="product_taital">خدمات المنزل</h1>
-                  <p class="product_text">هذه الخدمات تقم في المنزل الخاص بالعميل</p>
+                  <h1 class="product_taital text-dark">خدمات المنزل</h1>
+                  <p class="product_text text-dark">هذه الخدمات تقم في المنزل الخاص بالعميل</p>
                </div>
             </div>
             <div class="product_section_2 layout_padding">
@@ -198,7 +198,7 @@
                            <div class="row">
                               @foreach ($chunk as $service)
                               <div class="col-lg-3 col-sm-6">
-                                 <div class="product_box">
+                                 <div class="product_box bg-white" >
                                        <h4 class="bursh_text">{{ $service->name }}</h4>
                                        <p class="lorem_text">هذه الخدمة خاصة ب: ال{{ $service->gender == 'men' ? 'رجال' : 'نساء' }}</p>
                                        <img src="{{ asset($service->seller->seller_logo) }}" class="image_1">
@@ -242,23 +242,55 @@
         <div class="row">
             <div class="col-sm-12">
                 <h5 style="color: #2f3e3b !important;">المعرض</h5>
-                <h1 class="customer_taital">هنا يمكنك مشاهدة الصور الخاصة بالخدمات</h1>
+                <h1 class="customer_taital">هنا يمكنك مشاهدة الصور الخاصة بنا</h1>
             </div>
         </div>
-        <div id="main_slider" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                @foreach ($images->chunk(5) as $index => $chunk)
-                <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                    <div class="client_section_2 d-flex justify-content-center align-items-center">
-                        @foreach ($chunk as $image)
-                        <div class="client_img col-md-3">
-                            <img src="{{ asset($image->image) }}" width="150" height="150" class="rounded-circle" alt="Gallery Image">
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-                @endforeach
-            </div>
+        <!-- Gallery -->
+         <div class="row">
+         <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+            <img
+               src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp"
+               class="w-100 shadow-1-strong rounded mb-4"
+               alt="Boat on Calm Water"
+            />
+
+            <img
+               src="https://mdbcdn.b-cdn.net/img/Photos/Vertical/mountain1.webp"
+               class="w-100 shadow-1-strong rounded mb-4"
+               alt="Wintry Mountain Landscape"
+            />
+         </div>
+
+         <div class="col-lg-4 mb-4 mb-lg-0">
+            <img
+               src="https://mdbcdn.b-cdn.net/img/Photos/Vertical/mountain2.webp"
+               class="w-100 shadow-1-strong rounded mb-4"
+               alt="Mountains in the Clouds"
+            />
+
+            <img
+               src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp"
+               class="w-100 shadow-1-strong rounded mb-4"
+               alt="Boat on Calm Water"
+            />
+         </div>
+
+         <div class="col-lg-4 mb-4 mb-lg-0">
+            <img
+               src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(18).webp"
+               class="w-100 shadow-1-strong rounded mb-4"
+               alt="Waves at Sea"
+            />
+
+            <img
+               src="https://mdbcdn.b-cdn.net/img/Photos/Vertical/mountain3.webp"
+               class="w-100 shadow-1-strong rounded mb-4"
+               alt="Yosemite National Park"
+            />
+         </div>
+         </div>
+<!-- Gallery -->
+
         </div>
     </div>
 </div>
@@ -328,45 +360,70 @@
       <!-- Studio Services section end -->
 
 
-      <!-- Reels section start -->
-      <div class="customer_section py-5 my-5" id="reels">
-         <div class="container">
-            <div class="row">
-                  <div class="col-sm-12">
-                     <h5 style="color: #2f3e3b !important;">الريلز</h5>
-                     <h1 class="customer_taital">هنا يمكنك مشاهدة الريلز الخاصة بالخدمات</h1>
-                  </div>
-            </div>
-            <div id="main_slider" class="carousel slide" data-bs-ride="carousel">
-                  <div class="carousel-inner">
-                     @foreach ($reels->chunk(5) as $index => $chunk)
-                     <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                        <div class="client_section_2 d-flex justify-content-center align-items-center">
-                              @foreach ($chunk as $reel)
-                              <div class="client_img col-md-3">
-                                 <video width="150" height="150" controls>
-                                    <source src="{{ asset($reel->reel) }}" type="video/mp4">
-                                    <source src="{{ asset($reel->reel) }}" type="video/ogg">
-                                    متصفحك لا يدعم تشغيل الفيديو.
-                                 </video>
-                              </div>
-                              @endforeach
-                        </div>
-                     </div>
-                     @endforeach
-                  </div>
-            </div>
+<!-- Reels section start -->
+<div class="customer_section py-5 my-5" id="reels">
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-12">
+            <h5 style="color: #2f3e3b !important;">الريلز</h5>
+            <h1 class="customer_taital">هنا يمكنك مشاهدة الريلز الخاصة بالخدمات</h1>
          </div>
       </div>
-      <!-- Gallery section end -->
+      <div class="reels-wrapper">
+   <div class="reels-container" id="reelsContainer">
+      <div class="reels-inner d-flex gap-3" >
+         @foreach ($reels->chunk(6) as $chunk)
+         <div class="reels-group d-flex gap-3">
+            @foreach ($chunk as $reel)
+            <div class="reel-item d-flex gap-3">
+               <video class="reel-video" autoplay muted loop controls>
+                  <source src="{{ asset($reel->reel) }}" type="video/mp4">
+                  <source src="{{ asset($reel->reel) }}" type="video/ogg">
+                  متصفحك لا يدعم تشغيل الفيديو.
+               </video>
+               <div class="reel-overlay">
+                  <p class="reel-title">{{ $reel->seller->first_name . ' ' . $reel->seller->last_name ?? 'عنوان الفيديو' }}</p>
+               </div>
+            </div>
+            @endforeach
+         </div>
+         @endforeach
+      </div>
+   </div>
+</div>
+
+   </div>
+</div>
+
+<!-- start Modal -->
+ <!-- Modal for Full-Screen Reel -->
+<div class="modal fade" id="reelModal" tabindex="-1" aria-labelledby="reelModalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+            <video id="modalVideo" class="w-100" controls autoplay>
+               <source src="" type="video/mp4">
+               <source src="" type="video/ogg">
+               متصفحك لا يدعم تشغيل الفيديو.
+            </video>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- End Modal -->
+<!-- Reels section end -->
+
 
       <!-- footer section start -->
       <div class="footer_section layout_padding">
          <div class="container">
-            <div class="footer_logo"><a href="#"><img height="70px" src="{{asset('homePage/images/leen logo2.png')}}"></a></div>
             <div class="contact_section_2">
-               <div class="row">
-                  <div class="col-sm-4">
+               <div class="d-flex justify-content-between align-items-center">
+                  <div class="col-sm-3">
                      <h3 class="address_text">تواصل معنا</h3>
                      <div class="address_bt">
                         <ul>
@@ -388,14 +445,54 @@
                         </ul>
                      </div>
                   </div>
-                  <div class="col-sm-4">
-                     <div class="footer_logo_1"><a href="#"><img height="70px" src="{{asset('homePage/images/leen logo2.png')}}"></a></div>
-                     <p class="dummy_text">مع لين احجز الخدمات الخاصة بك في اقرب وقت وبضغطة زر</p>
+
+                  <div class="col-sm-3 text-center">
+                     <h3 class="address_text">روابط تهمك</h3>
+                     <div class="address_bt">
+                        <ul>
+                           <li>
+                              <a href="#">رابط 1</a>
+                           </li>
+                           <li>
+                              <a href="#">رابط 2</a>
+                           </li>
+                           <li>
+                              <a href="#">رابط 3</a>
+                           </li>
+                        </ul>
+                     </div>
                   </div>
-                  <div class="col-sm-4">
-                     <div class="main">
-                        <h3 class="address_text">خدماتنا</h3>
-                        <p class="ipsum_text">نحن نقدم لك الخدمات التجميليةالخاصة بالمنزل والاستوديو</p>
+
+                  <div class="col-sm-3 text-center">
+                     <h3 class="address_text">خدمات لين</h3>
+                     <div class="address_bt">
+                        <ul>
+                           <li>
+                              <a href="#">اضف خدمتك</a>
+                           </li>
+                           <li>
+                              <a href="#">سجل حسابك</a>
+                           </li>
+                           <li>
+                              <a href="#">تواصل معنا</a>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+
+                  <div class="col-sm-3 text-center">
+                     <h3 class="address_text">تطبيق لين</h3>
+                     <div class="d-flex flex-column align-items-center justify-content-center gap-3">
+                        <div>
+                           <a href="#">
+                              <img src="{{asset('homePage/images/appstore.svg')}}" alt="App Store">
+                           </a>
+                        </div>
+                        <div>
+                           <a href="#">
+                              <img src="{{asset('homePage/images/googleplay.svg')}}" alt="Google Play">
+                           </a>
+                        </div>
                      </div>
                   </div>
                </div>
@@ -422,7 +519,14 @@
       <!-- copyright section start -->
       <div class="copyright_section">
          <div class="container">
-            <p class="copyright_text">جميع الحقوق &copy; محفوظة لدي <a href="{{route('home') }}">لين</a></p>
+            <div class="content d-flex justify-content-between align-items-center mb-5">
+               <div class="footer_logo1 col-md-4 text-center"><a href="#"><img height="70px" src="{{asset('homePage/images/leen logo2.png')}}"></a></div>
+               <div class="col-md-4 text-center"><p class="copyright_text">جميع الحقوق &copy; محفوظة لدي <a href="{{route('home') }}">لين</a></p></div>
+               <div class="d-flex gap-3 col-md-4 text-center justify-content-center align-items-center">
+                  <p class="text-white m-0">تصميم وتطوير باقة التقنية</p>
+                  <img src="https://tptc.com.sa/tptc_logo.png" width="45" height="45" alt="TPTC">
+               </div>
+            </div>
          </div>
       </div>
       <!-- copyright section end -->
@@ -448,5 +552,27 @@
            document.getElementById("mySidenav").style.width = "0";
          }
       </script> 
+      <script>
+         document.addEventListener('DOMContentLoaded', () => {
+    const reels = document.querySelectorAll('.reel-video');
+    const modalVideo = document.getElementById('modalVideo');
+
+    reels.forEach(reel => {
+        reel.addEventListener('click', function () {
+            const videoSrc = this.querySelector('source').getAttribute('src');
+            modalVideo.querySelector('source').setAttribute('src', videoSrc);
+            modalVideo.load(); // Reload the video with the new source
+            const modal = new bootstrap.Modal(document.getElementById('reelModal'));
+            modal.show();
+        });
+    });
+
+    // Stop video when modal closes
+    document.getElementById('reelModal').addEventListener('hidden.bs.modal', function () {
+        modalVideo.pause();
+        modalVideo.currentTime = 0;
+    });
+});
+      </script>
    </body>
 </html>
