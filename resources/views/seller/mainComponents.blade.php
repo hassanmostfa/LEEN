@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang = "ar" dir = "rtl">
 	<head>
-
 		<!-- Basic -->
 		<meta charset="UTF-8">
 
@@ -61,8 +60,20 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-	</head>
-	<body>
+<!-- Pusher Assets -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pusher/7.0.3/pusher.min.js"></script>
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+
+<!-- Echo JS from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.11.0/dist/echo.iife.js"></script>
+
+
+@vite(['resources/css/app.css', 'resources/js/app.js'])
+
+
+</head>
+<body>
 		
 	<style>
 		body {

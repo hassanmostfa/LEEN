@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Broadcast;
+
 
 use App\Http\Controllers\MVC\HomeController;
 
@@ -412,3 +415,23 @@ Route::middleware('auth:customer')->group(function () {
 
 
 //=====================================================================================>
+
+Route::post('/broadcasting/auth', function (Request $request) {
+    try {
+        return Broadcast::auth($request);
+    } catch (Exception $e) {
+        \Log::error('Pusher auth error: ' . $e->getMessage());
+        return response()->json(['error' => 'Authentication failed'], 500);
+    }
+})->middleware('auth:seller');
+
+
+Route::post('/broadcasting/auth/customer', function (Request $request) {
+    try {
+        return Broadcast::auth($request);
+    } catch (Exception $e) {
+        \Log::error('Pusher auth error: ' . $e->getMessage());
+        return response()->json(['error' => 'Authentication failed'], 500);
+    }
+})->middleware('auth:customer');
+

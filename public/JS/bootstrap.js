@@ -17,13 +17,13 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  */
 
 import Echo from 'laravel-echo';
-import Pusher from 'pusher-js';
+import Pusher from 'pusher-js'; // Import Pusher for real-time functionality
 
-window.Pusher = Pusher;
+window.Pusher = Pusher; // Assign Pusher to the global scope
 
 window.Echo = new Echo({
     broadcaster: 'pusher',
-    key: '02c14683a1bbc058e455',
-    cluster: 'eu',
-    forceTLS: true
+    key: '02c14683a1bbc058e455', // Replace with your Pusher app key
+    cluster: 'eu',               // Replace with your Pusher app cluster
+    forceTLS: true,              // Ensure TLS is enabled
 });

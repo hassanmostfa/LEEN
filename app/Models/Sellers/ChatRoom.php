@@ -16,16 +16,29 @@ class ChatRoom extends Model
         'seller_id',
         'customer_id',
     ];
+ // Define the relationship with Seller (One to Many)
+ public function seller()
+ {
+     return $this->belongsTo(Seller::class);
+ }
 
-    public function seller()
-    {
-        return $this->belongsTo(Seller::class, 'seller_id');
-    }
+ // Define the relationship with Customer (One to Many)
+ public function customer()
+ {
+     return $this->belongsTo(Customer::class);
+ }
 
-    public function customer()
-    {
-        return $this->belongsTo(Customer::class, 'customer_id');
-    }
+ // Check if the seller can access the chat room
+ public function canAccessChatRoomAsSeller(Seller $seller)
+ {
+     return $this->seller_id === $seller->id;
+ }
+
+ // Check if the customer can access the chat room
+ public function canAccessChatRoomAsCustomer(Customer $customer)
+ {
+     return $this->customer_id === $customer->id;
+ }
 
     public function messages(){
         return $this->hasMany(Message::class);
@@ -33,5 +46,4 @@ class ChatRoom extends Model
 
     // In your ChatRoom model
     public $timestamps = true;
-    
 }

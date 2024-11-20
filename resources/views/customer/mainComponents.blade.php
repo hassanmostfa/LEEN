@@ -64,6 +64,21 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
+
+<!-- Pusher Assets -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pusher/7.0.3/pusher.min.js"></script>
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+
+<!-- Echo JS from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.11.0/dist/echo.iife.js"></script>
+
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+@vite('resources/css/app.css')
+
+@vite('resources/js/app.js')
+
 	</head>
 	<body>
 		
