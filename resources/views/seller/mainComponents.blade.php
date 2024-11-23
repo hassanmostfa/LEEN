@@ -331,11 +331,19 @@
 				                        </a>
 				                    </li>
 
+									<li>
+				                        <a class="nav-link" href="{{ route('seller.timetables') }}">
+										<i class="fa fa-clock" aria-hidden="true"></i>
+				                            <span>مواعيد العمل</span>
+				                        </a>
+				                    </li>
+
+									
 									<!-- Employees -->
 				                    <li class="nav-parent">
 				                        <a class="nav-link" href="#">
 										<i class="fa-solid fa-users"></i>
-				                            <span>الموظفين</span>
+				                            <span> الموظفين</span>
 				                        </a>
 				                        <ul class="nav nav-children">
 				                            <li>
@@ -352,7 +360,6 @@
 				                            </li> -->
 				                        </ul>
 				                    </li>
-
 
 									<!-- Home Services -->
 				                    <li class="nav-parent">

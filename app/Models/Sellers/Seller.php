@@ -77,4 +77,8 @@ class Seller extends Authenticatable
         return $this->hasMany(Rating::class, 'seller');
     }
 
+    public function sellerTimetable(){
+        return $this->hasMany(SellerTimetable::class, 'seller_id');
+    }
+
 }

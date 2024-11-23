@@ -111,7 +111,7 @@ class StudioServicesController extends Controller
             $homeService->booking_status = $request->booking_status;
             $homeService->discount = $request->discount;
             $homeService->percentage = $request->percentage;
-            $homeService->points = $request->points;
+            $homeService->points = $request->points ?? 0;
             $homeService->save();
     
             return redirect()->route('seller.studioServices')->with('success', 'تم اضافة الخدمة بنجاح');

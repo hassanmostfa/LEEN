@@ -139,29 +139,9 @@
                                         <button type="button" class="btn btn-primary mb-3" onclick="nextStep()">التالي</button>
                                     </div>
 
-                                    <!-- Step 2: Customer Image -->
-                                    <div class="step" id="step-2" style="display:none;">
-                                        <h5 class="text-center mb-4">الخطوة الثانية</h5>
 
-                                        <!-- Customer Image -->
-                                        <div class="mb-3">
-                                            <label for="customer_image" style="font-weight: 600; font-size: 18px" class="form-label w-100 text-right">الصورة الرمزية (اختياري)</label>
-                                            <div id="drop-area-image" class="drop-area" ondragover="event.preventDefault()" ondrop="handleDrop(event)">
-                                                <i class="fas fa-cloud-upload-alt"></i>
-                                                <p>قم بسحب وإفلات صورتك هنا أو <span id="browse-button-logo" class="browse-text" onclick="document.getElementById('seller_logo').click()" style="cursor: pointer; color: #007bff;">تصفح</span></p>
-                                                <input type="file" id="seller_logo" name="image" class="form-control" accept="image/*" style="display: none;" onchange="handleFileSelect(this)">
-                                                <div id="preview-logo" class="logo-image-preview d-flex justify-content-center align-items-center"></div>
-                                            </div>
-                                        </div>
-
-                                        <div class="d-flex gap-2 align-items-center mb-3 justify-content-end">
-                                            <button type="button" class="btn btn-info" onclick="prevStep()">السابق</button>
-                                            <button type="button" class="btn btn-primary" onclick="nextStep()">التالي</button>
-                                        </div>
-                                    </div>
-
-                                    <!-- Step 3: Location -->
-                                    <div class="step" id="step-3" style="display: none;">
+                                    <!-- Step 2: Location -->
+                                    <div class="step" id="step-2" style="display: none;">
                                         <h5 class="text-center mb-4">الخطوة الثالثة</h5>
 
                                         <div class=" mb-3 mt-0 bg-white">

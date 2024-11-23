@@ -43,7 +43,6 @@
                                 <th>الموظف</th>
                                 <th>التاريخ</th>
                                 <th>وقت البدا</th>
-                                <th>وقت الانتهاء</th>
                                 <th>السعر الاجمالي</th>
                                 <th>حالة الدفع</th>
                                 <th>المبلغ المدفوع</th>
@@ -85,7 +84,6 @@
                                     </td>
                                     <td>{{ $homeBooking->date }}</td>
                                     <td>{{ $homeBooking->start_time }}</td>
-                                    <td>{{ $homeBooking->end_time }}</td>
                                     <td>
                                         {{ number_format($homeBooking->homeService->price, 2) }} SAR <!-- Main Service Price -->
                                         @if($homeBooking->homeServiceBookingItems->isNotEmpty())

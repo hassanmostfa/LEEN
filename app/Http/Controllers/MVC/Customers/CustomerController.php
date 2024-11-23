@@ -34,7 +34,6 @@ class CustomerController extends Controller
                 'email' => ['required', 'string', 'email', 'max:255'],
                 'location' => ['required', 'string', 'max:255'],
                 'password' => ['required', 'string', 'min:8' , 'confirmed'],
-                'image' => ['nullable', 'mimes:jpg,jpeg,png', 'max:2048'],
             ]);
     
             if ($validator->fails()) {
@@ -57,7 +56,6 @@ class CustomerController extends Controller
                     'password' => Hash::make($request->password),
                     'phone' => $phone,
                     'phone_verified_at' => now(),
-                    'image' => $request->file('image') ? $request->file('image')->store('customers_images') : null , 
                 ]);
     
                 $customer->save();
@@ -78,14 +76,6 @@ class CustomerController extends Controller
         // Login Page
         public function customerLoginPage()
         {
-            // dd(session()->all()); // Check all session data
-
-            // if (session()->has('booking_data')) {
-            //     dd(session()->get('booking_data'));
-            // } else {
-            //     dd('no booking data');
-            // }
-        
             return view('customer.auth.login');
         }
     
@@ -171,37 +161,33 @@ public function getCustomerSellers()
     // Combine both seller IDs into a unique list
     $sellerIds = array_unique(array_merge($homeServiceSellerIds, $studioServiceSellerIds));
 
-    $sellersData = [];
-    
-    foreach ($sellerIds as $sellerId) {
-        // Fetch chat room for the seller and client
+    // Step 2: Retrieve seller information
+    $sellers = Seller::whereIn('id', $sellerIds)->get();
+
+    // Step 3: Add chat details for each seller
+    $sellersWithChatDetails = $sellers->map(function ($seller) use ($customerId) {
         $chatRoom = ChatRoom::where('customer_id', $customerId)
-            ->where('seller_id', $sellerId)
+            ->where('seller_id', $seller->id)
             ->with(['messages' => function ($query) {
-                // Get the latest message for each chat room
                 $query->orderBy('created_at', 'desc')->limit(1);
             }])
             ->withCount(['messages as unread_messages_count' => function ($query) use ($customerId) {
-                // Count unread messages in this chat room for the seller
                 $query->where('is_read', false)
-                      ->where('sender_type', '!=', 'App\Models\Customers\Customer'); // Messages not sent by the seller
+                      ->where('sender_type', '!=', 'App\Models\Customers\Customer');
             }])
             ->first();
 
-        if ($chatRoom) {
-            $latestMessage = $chatRoom->messages->first();
-            $unreadCount = $chatRoom->unread_messages_count;
+        $latestMessage = $chatRoom ? $chatRoom->messages->first() : null;
+        $unreadCount = $chatRoom ? $chatRoom->unread_messages_count : 0;
 
-            // Collect client info with chat details
-            $seller = Seller::find($sellerId);
-            $sellers[] = [
-                'seller' => $seller,
-                'latestMessage' => $latestMessage,
-                'unreadCount' => $unreadCount,
-            ];
-        }
-    }
+        return [
+            'seller' => $seller,
+            'latestMessage' => $latestMessage,
+            'unreadCount' => $unreadCount,
+        ];
+    });
 
-    return view('customer.chat.sellers', compact('sellers'));
-    }
+    return view('customer.chat.sellers', ['sellers' => $sellersWithChatDetails]);
+}
+
 }

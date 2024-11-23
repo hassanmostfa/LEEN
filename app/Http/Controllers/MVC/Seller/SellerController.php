@@ -157,7 +157,7 @@ class SellerController extends Controller
         // Merge and make client list unique
         $clientIds = array_unique(array_merge($homeClients, $studioClients));
     
-        $clientsData = [];
+        $clients = [];
     
         foreach ($clientIds as $clientId) {
             // Fetch chat room for the seller and client
@@ -185,11 +185,20 @@ class SellerController extends Controller
                     'latestMessage' => $latestMessage,
                     'unreadCount' => $unreadCount,
                 ];
+            } else {
+                // If no chat room exists, still add the client
+                $client = Customer::find($clientId);
+                $clients[] = [
+                    'client' => $client,
+                    'latestMessage' => null,
+                    'unreadCount' => 0,
+                ];
             }
         }
     
         return view('seller.clients', compact('clients'));
     }
+    
     
     
 }

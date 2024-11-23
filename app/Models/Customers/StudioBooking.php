@@ -24,7 +24,6 @@ class StudioBooking extends Model
         'seller_id',
         'date',
         'start_time',
-        'end_time',
         'payment_status',
         'booking_status',
         'paid_amount',

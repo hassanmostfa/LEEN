@@ -21,7 +21,6 @@ return new class extends Migration
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
             $table->date('date');
             $table->time('start_time');
-            $table->time('end_time');
             $table->string('payment_status')->default('unpaid');
             $table->string('booking_status')->default('pending');
             $table->string('location');

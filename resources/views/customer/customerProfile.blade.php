@@ -60,7 +60,7 @@
                             <!-- Image Section: 4 Columns -->
                             <div class="col-md-4 text-center">
                                 <!-- Image Preview -->
-                                <img id="image-preview" src="{{ asset($customer->image) }}" alt="Customer Image" class="img-fluid mb-2 rounded" style="width: 100%; height: 250px; object-fit: contain;">
+                                <img id="image-preview" src="{{ asset($customer->image ? $customer->image : 'https://th.bing.com/th/id/OIP.iPvPGJG166ivZnAII4ZS8gHaHa?rs=1&pid=ImgDetMain') }}" alt="Customer Image" class="img-fluid mb-2 rounded" style="width: 100%; height: 250px; object-fit: contain;">
                                 <h4>الصورة الشخصية</h4>
                                 
                                 <!-- Hidden file input for image upload -->

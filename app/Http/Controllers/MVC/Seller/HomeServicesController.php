@@ -25,7 +25,7 @@ class HomeServicesController extends Controller
     public function index()
     {
         // Show Home Services
-        $homeServices = HomeService::where('seller_id', Auth::user()->id)->get()->with('ratings');
+        $homeServices = HomeService::where('seller_id', Auth::user()->id)->get();
 
         // Category name for each service
         foreach ($homeServices as $service) {
@@ -64,7 +64,7 @@ class HomeServicesController extends Controller
             return redirect()->route('seller.dashboard')->with('error', 'لا يمكنك اضافة خدمة جديدة لان حسابك غير مفعل');
         }
     }catch (\Throwable $th) {
-            return redirect()->route('seller.dashboard')->with('error', 'حدث خطاء: ' . $th->getMessage());
+            return response()->json(['error' => $th->getMessage()], 500);
         }
     }
 
@@ -110,13 +110,13 @@ class HomeServicesController extends Controller
             $homeService->booking_status = $request->booking_status;
             $homeService->discount = $request->discount;
             $homeService->percentage = $request->percentage;
-            $homeService->points = $request->points;
+            $homeService->points = $request->points ?? 0;
             $homeService->save();
     
             return redirect()->route('seller.homeServices')->with('success', 'تم اضافة الخدمة بنجاح');
         } catch (\Throwable $th) {
             // Handle any errors during the save operation
-            return redirect()->route('seller.homeServices')->with('error', 'حدث خطأ: ' . $th->getMessage());
+            return response()->json(['error' => $th->getMessage()], 500);
         }
     }
     
@@ -145,7 +145,7 @@ class HomeServicesController extends Controller
             $employee = Employee::findOrFail($employee);
             $employees[$key] = $employee->name;
         }
-        return view('seller.services.home services.showService', compact('homeService' , 'employees' , 'averageRating'));
+        return view('seller.services.home services.showService', compact('homeService' , 'employees'));
     }
 
     /**

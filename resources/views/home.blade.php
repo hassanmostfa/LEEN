@@ -332,7 +332,7 @@
                                        <div class="btn_main">
                                           <div class="buy_bt col-md-6">
                                              <ul>
-                                                   <li><a href="{{ route('homeService.show', $service->id) }}">احجز الان</a></li>
+                                                   <li><a href="{{ route('studioService.show', $service->id) }}">احجز الان</a></li>
                                              </ul>
                                           </div>
                                           <h3 class="price_text col-md-6">{{ $service->price }} ريال</h3>

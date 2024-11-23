@@ -43,7 +43,6 @@
                                 <th>الموظف</th>
                                 <th>التاريخ</th>
                                 <th>وقت البدا</th>
-                                <th>وقت الانتهاء</th>
                                 <th>السعر الاجمالي</th>
                                 <th>حالة الدفع</th>
                                 <th>المبلغ المدفوع</th>
@@ -60,7 +59,6 @@
                                     <td>{{ $studioBooking->employee->name }}</td>
                                     <td>{{ $studioBooking->date }}</td>
                                     <td>{{ $studioBooking->start_time }}</td>
-                                    <td>{{ $studioBooking->end_time }}</td>
                                     <td>{{ $studioBooking->studioService->price }}</td>
                                     <td>{{ $studioBooking->payment_status }}</td>
                                     <td>{{ $studioBooking->paid_amount }}</td>

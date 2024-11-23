@@ -125,7 +125,7 @@
 
 			<div class="inner-wrapper p-0">
 				<!-- start: sidebar -->
-				<aside id="sidebar-left" class="sidebar-left">
+				<aside id="sidebar-left" class="sidebar-left" style="width: 200px;">
 
 				    <div class="sidebar-header">
 				        
@@ -328,5 +328,6 @@
         }
     }
 </script>
+
 </body>
 </html>

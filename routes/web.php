@@ -24,6 +24,7 @@ use App\Http\Controllers\MVC\Seller\ImagesController;
 use App\Http\Controllers\MVC\Seller\ReelsController;
 use App\Http\Controllers\MVC\Seller\CouponsController;
 use App\Http\Controllers\MVC\Seller\ChatController;
+use App\Http\Controllers\MVC\Seller\SellersTimetablesController;
 
 use App\Http\Controllers\MVC\Customers\CustomerController;
 use App\Http\Controllers\MVC\Customers\ProfileController;
@@ -305,6 +306,20 @@ Route::middleware('auth:seller')->group(function () {
         // Store a new message in the chat session
         Route::post('/seller/chat/send', 'sendMessage')->name('seller.chat.send');
     });
+
+    // Seller Timetable Routes
+    Route::controller(SellersTimetablesController::class)->group(function () {
+        // Show All Timetables
+        Route::get('/seller/timetables', 'index')->name('seller.timetables');
+        // Store New Timetable
+        Route::post('/seller/timetables/store', 'store')->name('seller.timetable.store');
+        // Edit Timetable
+        Route::get('/seller/timetables/edit/{id}', 'edit')->name('seller.timetable.edit');
+        // Update Timetable
+        Route::put('/seller/timetables/update/{id}', 'update')->name('seller.timetable.update');
+        // Delete Timetable
+        Route::delete('/seller/timetables/destroy/{id}', 'destroy')->name('seller.timetable.destroy');
+    });
 });
 
 //=====================================================================================>
@@ -341,6 +356,10 @@ Route::middleware('auth:customer')->group(function () {
     });
 });
 
+// Get Working Days
+Route::get('/seller/{sellerId}/active-weekdays', [BookingHomeServicesController::class, 'getSellerActiveWeekdays'])->name('getSellerActiveWeekdays');
+// check available times
+Route::post('/check-available-times', [BookingHomeServicesController::class, 'checkAvailableTimes'])->name('checkAvailableTimes');
 // Check Employee Availability
 Route::post('/check-employee-availability', [BookingHomeServicesController::class, 'checkEmployeeAvailability'])->name('checkEmployeeAvailability');
 // Get Related Employees By Home Service

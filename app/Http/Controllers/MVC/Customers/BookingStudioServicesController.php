@@ -22,7 +22,6 @@ class BookingStudioServicesController extends Controller
             'employee_id' => 'required',
             'date' => 'required|date',
             'start_time' => 'required',
-            'end_time' => 'required',
             'paid_amount' => 'required|numeric',
         ]);
     
@@ -37,7 +36,6 @@ class BookingStudioServicesController extends Controller
             'customer_id' => Auth::guard('customer')->user()->id,
             'date' => $request->date,
             'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
             'paid_amount' => $request->paid_amount,
             'location' => $request->location,
         ]);
@@ -48,7 +46,6 @@ class BookingStudioServicesController extends Controller
             'seller_id' => $request->seller_id,
             'date' => $request->date,
             'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
             'status' => 'busy',
         ]);
 
@@ -72,7 +69,6 @@ class BookingStudioServicesController extends Controller
         $validator = Validator::make($request->all(), [
             'date' => 'required|date',
             'start_time' => 'required',
-            'end_time' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -81,10 +77,23 @@ class BookingStudioServicesController extends Controller
 
         $studioBooking = StudioBooking::findOrFail($id);
 
+            // Update the timetable record for the selected employee
+    $timetable = Timetable::where('employee_id', $studioBooking->employee_id)
+    ->where('date', $studioBooking->date)
+    ->where('start_time', $studioBooking->start_time)
+    ->first();
+
+
+if ($timetable) {
+    $timetable->update([
+        'date' => $request->date,
+        'start_time' => $request->start_time,
+    ]);
+}
+
         $studioBooking->update([
             'date' => $request->date,
             'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
         ]);
 
         if ($studioBooking->booking_status == 'accepted') {

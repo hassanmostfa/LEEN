@@ -19,7 +19,6 @@ return new class extends Migration
             $table->foreignId('seller_id')->constrained('sellers')->onDelete('cascade');    // Seller link
             $table->date('date'); // Booking date
             $table->time('start_time'); // Start time
-            $table->time('end_time'); // End time
             $table->string('status')->default('available'); // Status (e.g., booked, available)
             $table->timestamps();
         });

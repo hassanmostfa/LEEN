@@ -21,7 +21,6 @@ class HomeBooking extends Model
         'seller_id',
         'date',
         'start_time',
-        'end_time',
         'location',
         'payment_status',
         'booking_status',

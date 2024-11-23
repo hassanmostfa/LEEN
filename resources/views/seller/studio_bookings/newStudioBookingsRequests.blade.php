@@ -43,7 +43,6 @@
                                 <th>الموظف</th>
                                 <th>التاريخ</th>
                                 <th>وقت البدا</th>
-                                <th>وقت الانتهاء</th>
                                 <th>السعر الاجمالي</th>
                                 <th>حالة الدفع</th>
                                 <th>المبلغ المدفوع</th>
@@ -80,7 +79,6 @@
                                     </td>
                                     <td>{{ $studioBooking->date }}</td>
                                     <td>{{ $studioBooking->start_time }}</td>
-                                    <td>{{ $studioBooking->end_time }}</td>
                                     <td>
                                         {{ number_format($studioBooking->studioService->price, 2) }} SAR <!-- Main Service Price -->
                                         @if($studioBooking->studioServiceBookingItems->isNotEmpty())

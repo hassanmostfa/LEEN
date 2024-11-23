@@ -14,9 +14,9 @@
     <div class="alert alert-danger">{{ Session::get('error') }}</div>
 @endif
 
+@if (count($clients) > 0)
 <div class="container clients mt-4">
     <div class="row">
-        <!-- Loop through clients data here -->
         @foreach($clients as $data)
             @php
                 $client = $data['client'];
@@ -28,18 +28,19 @@
                 <div class="card">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center gap-3">
-                            <img src="{{ asset($client->image ?? 'https://via.placeholder.com/150') }}" width="70" height="70" alt="customer image" class="rounded-circle">
+                            <img src="{{ $client->profile_photo ? asset($client->profile_photo) : 'https://via.placeholder.com/150' }}" 
+                                 width="70" height="70" alt="client image" class="rounded-circle">
                             <div>
-                                <h5 class="card-title">{{ $client->first_name . ' ' . $client->last_name }}</h5>
+                                <h5 class="card-title mb-1">{{ $client->first_name }} {{ $client->last_name }}</h5>
                                 
-                                <p class="mb-0 text-muted">
-                                    @if ($unreadCount > 0)
-                                        <span class="badge bg-primary">({{ $unreadCount }} رسائل جديدة)</span>
-                                    @endif
-                                </p>
+                                @if ($unreadCount > 0)
+                                    <span class="badge bg-primary">({{ $unreadCount }} رسائل جديدة)</span>
+                                @endif
 
-                                @if($latestMessage)
+                                @if ($latestMessage)
                                     <p class="text-muted mb-0">{{ Str::limit($latestMessage->message, 50) }}</p>
+                                @else
+                                    <p class="text-muted mb-0">لا توجد رسائل جديدة</p>
                                 @endif
                             </div>
                         </div>
@@ -53,5 +54,18 @@
         @endforeach
     </div>
 </div>
+@else
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12"> 
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h4>لا يوجد عملاء حتى الآن</h4> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
 
 @endsection

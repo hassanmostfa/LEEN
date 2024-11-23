@@ -84,11 +84,6 @@
                                 </tr>
 
                                 <tr>
-                                    <th>وقت الانتهاء</th>
-                                    <td>{{ $homeBooking->end_time }}</td>
-                                </tr>
-
-                                <tr>
                                     <th>حالة الدفع</th>
                                     <td>
                                         @if ($homeBooking->payment_status == 'unpaid')

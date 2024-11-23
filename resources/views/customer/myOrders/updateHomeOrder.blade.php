@@ -32,25 +32,22 @@
                         @csrf
                         @method('PUT')
 
-                        <!-- Seller Details Card Row 1: Two input fields side by side -->
-                        <div class="row mb-3">
-                            <div class="col-md-12">
-                                <label for="date" class="form-label">التاريخ</label>
-                                <input type="date" class="form-control" name="date" value="{{ $homeBooking->date }}" required>
-                            </div>
+                        
+                        <!-- Seller Details Card Row 2: Two input fields side by side -->
+                        <div class="row col-md-12">
+
+                                <div class="col-md-6">
+                                    <label for="date" class="form-label">التاريخ</label>
+                                    <input type="date" class="form-control" name="date" value="{{ $homeBooking->date }}" required>
+                                </div>
+    
+                                <div class="col-md-6">
+                                    <label for="start_time" class="form-label">وقت البدا</label>
+                                    <input type="time" class="form-control" name="start_time" value="{{ $homeBooking->start_time }}" required>
+                                </div>
                         </div>
 
-                        <!-- Seller Details Card Row 2: Two input fields side by side -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="start_time" class="form-label">وقت البدا</label>
-                                <input type="time" class="form-control" name="start_time" value="{{ $homeBooking->start_time }}" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="end_time" class="form-label">وفت الانتهاء</label>
-                                <input type="time" class="form-control" name="end_time" value="{{ $homeBooking->end_time }}" required>
-                            </div>
-                        </div>
+                        
                         
 
                         <!-- Image Row: Two images side by side with "Change" buttons -->

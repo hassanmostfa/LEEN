@@ -173,7 +173,7 @@
                 },
                 error: function(error) {
                     console.error('Error sending message:', error);
-                    alert('Failed to send message. Please try again.');
+                    alert('حدث خطأ أثناء إرسال الرسالة ، يرجى المحاولة مرة أخرى.');
                     // Reset submission flag even if error occurs
                     isSubmitting = false;
                 }

@@ -79,10 +79,6 @@
                                     <td>{{ $studioBooking->start_time }}</td>
                                 </tr>
 
-                                <tr>
-                                    <th>وقت الانتهاء</th>
-                                    <td>{{ $studioBooking->end_time }}</td>
-                                </tr>
 
                                 <tr>
                                     <th>حالة الدفع</th>

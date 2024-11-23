@@ -43,7 +43,6 @@
                                 <th>الموظف</th>
                                 <th>التاريخ</th>
                                 <th>وقت البدا</th>
-                                <th>وقت الانتهاء</th>
                                 <th>السعر الاجمالي</th>
                                 <th>حالة الدفع</th>
                                 <th>المبلغ المدفوع</th>
@@ -60,7 +59,6 @@
                                     <td>{{ $homeBooking->employee->name }}</td>
                                     <td>{{ $homeBooking->date }}</td>
                                     <td>{{ $homeBooking->start_time }}</td>
-                                    <td>{{ $homeBooking->end_time }}</td>
                                     <td>{{ $homeBooking->homeService->price }}</td>
                                     <td>{{ $homeBooking->payment_status }}</td>
                                     <td>{{ $homeBooking->paid_amount }}</td>

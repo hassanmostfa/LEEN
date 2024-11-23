@@ -6,38 +6,45 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use App\Models\Customers\HomeBooking;
 use App\Models\Sellers\Employee;
 use App\Models\Sellers\Timetable;
 use App\Models\Customers\HomeServiceBookingItem;
+use App\Models\Sellers\SellerTimetable;
 
 class BookingHomeServicesController extends Controller
 {
 
+    public function getSellerActiveWeekdays($sellerId)
+    {
+        // Retrieve the seller's timetable for active weekdays
+        $activeDays = SellerTimetable::where('seller_id', $sellerId)->pluck('day')->toArray();
+    
+        return response()->json(['activeDays' => $activeDays]);
+    }
 
+    
     public function checkEmployeeAvailability(Request $request)
-{
-    $date = $request->date;
-    $startTime = $request->start_time;
-    $endTime = $request->end_time;
-    $sellerId = $request->seller_id;
+    {
+        try {
+            $date = $request->date;
+            $startTime = $request->start_time;
+            $sellerId = $request->seller_id;
 
-    // Find employees for the given seller who are busy during the requested time
-    $busyEmployees = Timetable::where('seller_id', $sellerId)
-        ->where('date', $date)
-        ->where(function ($query) use ($startTime, $endTime) {
-            $query->whereBetween('start_time', [$startTime, $endTime])
-                  ->orWhereBetween('end_time', [$startTime, $endTime])
-                  ->orWhere(function ($query) use ($startTime, $endTime) {
-                      $query->where('start_time', '<=', $startTime)
-                            ->where('end_time', '>=', $endTime);
-                  });
-        })
-        ->pluck('employee_id');
-
-    return response()->json(['busyEmployees' => $busyEmployees]);
-}
-
+            $busyEmployees = Timetable::where('seller_id', $sellerId)
+                ->where('date', $date)
+                ->where('start_time', $startTime)
+                ->pluck('employee_id');
+    
+            return response()->json(['busyEmployees' => $busyEmployees]);
+        } catch (\Exception $e) {
+            // Log the error and return a generic message
+            \Log::error('Error in checkEmployeeAvailability: ' . $e->getMessage());
+            return response()->json(['error' => 'Something went wrong'], 500);
+        }
+    }
+    
 
 
     // booking home service
@@ -50,7 +57,6 @@ class BookingHomeServicesController extends Controller
             'employee_id' => 'required',
             'date' => 'required|date',
             'start_time' => 'required',
-            'end_time' => 'required',
             'paid_amount' => 'required|numeric',
         ]);
     
@@ -66,7 +72,6 @@ class BookingHomeServicesController extends Controller
             'customer_id' => Auth::guard('customer')->user()->id,
             'date' => $request->date,
             'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
             'paid_amount' => $request->paid_amount,
             'location' => $request->location,
         ]);
@@ -77,7 +82,6 @@ class BookingHomeServicesController extends Controller
             'seller_id' => $request->seller_id,
             'date' => $request->date,
             'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
             'status' => 'busy',
         ]);
     
@@ -97,40 +101,50 @@ class BookingHomeServicesController extends Controller
     }
     // Update booking home service
     public function update(Request $request, $id)
-    {
+{
+    $validator = Validator::make($request->all(), [
+        'date' => 'required|date',
+        'start_time' => 'required',
+        'location' => 'required',
+    ]);
 
-        $validator = Validator::make($request->all(), [
-            'date' => 'required|date',
-            'start_time' => 'required',
-            'end_time' => 'required',
-            'location' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $homeBooking = HomeBooking::findOrFail($id);
-
-        $homeBooking->update([
-            'date' => $request->date,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
-            'location' => $request->location,
-        ]);
-
-        if ($homeBooking->booking_status == 'accepted') {
-            $homeBooking->update([
-                'booking_status' => 'pending',
-            ]);
-        }elseif ($homeBooking->booking_status == 'rejected') {
-            $homeBooking->update([
-                'booking_status' => 'pending',
-            ]);
-        }
-
-        return redirect()->route('customer.homeBookings')->with('success', 'تم تعديل الحجز بنجاح الرجاء الانتظار حتى يتم الموافقة عليه');
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
     }
+
+    
+    $homeBooking = HomeBooking::findOrFail($id);
+
+    // Update the timetable record for the selected employee
+    $timetable = Timetable::where('employee_id', $homeBooking->employee_id)
+    ->where('date', $homeBooking->date)
+    ->where('start_time', $homeBooking->start_time)
+    ->first();
+
+
+if ($timetable) {
+    $timetable->update([
+        'date' => $request->date,
+        'start_time' => $request->start_time,
+    ]);
+}
+
+    $homeBooking->update([
+        'date' => $request->date,
+        'start_time' => $request->start_time,
+        'location' => $request->location,
+    ]);
+
+    if ($homeBooking->booking_status == 'accepted' || $homeBooking->booking_status == 'rejected') {
+        $homeBooking->update([
+            'booking_status' => 'pending',
+        ]);
+    }
+
+
+
+    return redirect()->route('customer.homeBookings')->with('success', 'تم تعديل الحجز بنجاح الرجاء الانتظار حتى يتم الموافقة عليه');
+}
 
 
     // add service to existing booking
@@ -164,4 +178,49 @@ class BookingHomeServicesController extends Controller
         }
     }
     
+
+
+    public function checkAvailableTimes(Request $request)
+{
+    $date = $request->date;
+    $sellerId = $request->seller_id;
+
+    // Get the seller's timetable for the selected day
+    $sellerTimetable = SellerTimetable::where('seller_id', $sellerId)
+                                ->where('day', 'like', '%'.date('l', strtotime($date)).'%')
+                                ->first();
+
+    if (!$sellerTimetable) {
+        return response()->json(['message' => 'Seller not available on the selected date'], 400);
+    }
+
+    // Get the seller's working hours for that day (start_time and end_time)
+    $startTime = $sellerTimetable->start_time;
+    $endTime = $sellerTimetable->end_time;
+
+    // Generate available times between start_time and end_time
+    $availableTimes = $this->generateAvailableTimes($startTime, $endTime);
+
+    return response()->json([
+        'message' => 'Available times fetched successfully',
+        'availableTimes' => $availableTimes
+    ]);
+}
+
+// Helper function to generate available times based on start and end time
+public function generateAvailableTimes($startTime, $endTime)
+{
+    $times = [];
+    $currentTime = strtotime($startTime);
+    $endTime = strtotime($endTime);
+
+    // Increment time in 30-minute intervals
+    while ($currentTime <= $endTime) {
+        $times[] = date('H:i', $currentTime);
+        $currentTime = strtotime('+1 hour', $currentTime);
+    }
+
+    return $times;
+}
+
 }

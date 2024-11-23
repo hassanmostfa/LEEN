@@ -125,22 +125,21 @@
                                     <input type="hidden" name="studio_service_id" value="{{ $studioService->id }}">
                                     <input type="hidden" name="seller_id" value="{{ $studioService->seller_id }}">
 
-                                    <!-- Date, Start Time, and End Time Inputs -->
-                                    <div class="mb-3">
-                                        <label for="date" class="form-label">التاريخ</label>
-                                        <input type="text" name="date" id="date" class="form-control flatpickr" placeholder="اختر التاريخ" required>
-                                    </div>
+ 
+                                <!-- Date, Start Time Inputs -->
+                                <div class="mb-3">
+                                    <label for="date" class="form-label">التاريخ</label>
+                                    <input type="text" name="date" id="date" class="form-control flatpickr" placeholder="اختر التاريخ" required>
+                                </div>
 
-                                    <div class="row">
-                                        <div class="mb-3 col-md-6">
-                                            <label for="start_time" class="form-label">وقت البدء</label>
-                                            <input type="time" name="start_time" class="form-control" required>
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            <label for="end_time" class="form-label">وقت الانتهاء</label>
-                                            <input type="time" name="end_time" class="form-control" required>
-                                        </div>
-                                    </div>
+                                <!-- Time selection (this will dynamically update based on the available times) -->
+                                <div class="mb-3">
+                                    <label for="start_time" class="form-label">الوقت</label>
+                                    <select id="start_time" class="form-control" name="start_time" required>
+                                        <!-- Available times will be populated here -->
+                                    </select>
+                                </div>
+
 
                                     <!-- Employee Selection -->
                                     <div class="mb-3">
