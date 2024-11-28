@@ -29,15 +29,23 @@
     </div>
 
 
-    <form action="{{ route('seller.chat.send')}}" method="POST" class="py-2  rounded">
+    <form action="{{ route('seller.chat.send')}}" id="messageForm" method="POST" class="py-2 rounded">
     @csrf
     <input type="hidden" name="chat_room_id" value="{{ $chatRoom->id }}">
-    
-    <div class="d-flex align-items-center mb-3">
-        <textarea name="message" class="form-control me-2" rows="1" placeholder="اكتب رسالتك هنا..." required></textarea>
-        <button type="submit" class="btn btn-primary" style="width: 100px;">ارسال <i class="fas fa-paper-plane"></i> </button>
-    </div>
 
+    <div class="d-flex align-items-center message-input" style="background: #f1f1f1; padding: 8px; border-radius: 25px;">
+        <textarea name="message"
+                id="messageInput"
+                class="form-control me-2"
+                rows="1"
+                placeholder="اكتب رسالتك هنا..."
+                required
+                style="border: none; background: transparent; resize: none; overflow: hidden; outline: none;"></textarea>
+        <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center"
+                style="width: 50px; height: 50px; border-radius: 50%; padding: 0;">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+    </div>
 </form>
 
 </div>
@@ -121,69 +129,47 @@
 
 
 <script>
-    $(document).ready(function() {
-        // Flag to prevent multiple submissions
-        let isSubmitting = false;
+   $(document).ready(function () {
 
-        // Handle message form submission
-        $('form').on('submit', function(e) {
-            e.preventDefault(); // Prevent default form submission
+    // Flag to prevent multiple submissions
+    let isSubmitting = false;
 
-            if (isSubmitting) {
-                return; // Exit if already submitting
+    // Handle message form submission (AJAX)
+    $('form').on('submit', function (e) {
+        e.preventDefault(); // Prevent default form submission
+
+        if (isSubmitting) {
+            return; // Exit if already submitting
+        }
+
+        isSubmitting = true; // Mark as submitting
+
+        let formData = $(this).serialize(); // Serialize form data
+
+        $.ajax({
+            url: $(this).attr('action'), // Use the form's action URL
+            
+            method: 'POST',
+            data: formData,
+            success: function (response) {
+                console.log('Message sent successfully:', response);
+
+                // Clear the message input field
+                $('textarea[name="message"]').val('');
+
+                // Reset submission flag
+                isSubmitting = false;
+            },
+            error: function (error) {
+                console.error('Error sending message:', error);
+                alert('حدث خطأ أثناء إرسال الرسالة ,  يرجى المحاولة مرة أخرى');
+                // Reset submission flag even if error occurs
+                isSubmitting = false;
             }
-
-            isSubmitting = true; // Mark as submitting
-
-            let formData = $(this).serialize(); // Serialize form data
-
-            $.ajax({
-                url: $(this).attr('action'), // Use the form's action URL
-                method: 'POST',
-                data: formData,
-                success: function(response) {
-                    console.log('Message sent successfully:', response);
-
-                    // Clear the message input field
-                    $('textarea[name="message"]').val('');
-
-                    // Determine the sender type (current user or the other user)
-                    let senderType = response.data.sender_type; // Should be 'App\\Models\\Sellers\\Seller' or 'App\\Models\\Customers\\Customer'
-                    let alignment = senderType === 'App\\Models\\Sellers\\Seller' ? 'start' : 'end';
-                    let messageClass = senderType === 'App\\Models\\Sellers\\Seller' ? 'my-message' : 'their-message';
-
-                    // Construct the message HTML
-                    let newMessage = `
-                        <div class="d-flex justify-content-${alignment} mb-3">
-                            <div style="width: 40%;" class="${messageClass} rounded p-2">
-                                <div class="mb-0">${response.data.message}</div>
-                                <small>الآن</small>
-                                <small class="float-start">${response.data.is_read ? 'مقروء' : 'غير مقروء'}</small>
-                            </div>
-                        </div>
-                    `;
-
-                    // Append the new message to the chat box
-                    // $('#chatBox').append(newMessage);
-
-                    // Scroll to the bottom of the chat box
-                    $('#chatBox').scrollTop($('#chatBox')[0].scrollHeight);
-
-                    // Reset submission flag
-                    isSubmitting = false;
-                },
-                error: function(error) {
-                    console.error('Error sending message:', error);
-                    alert('حدث خطأ أثناء إرسال الرسالة ,  يرجى المحاولة مرة أخرى');
-                    // Reset submission flag even if error occurs
-                    isSubmitting = false;
-                }
-            });
         });
     });
+});
 </script>
-
-
 
 
 <script>
@@ -193,5 +179,45 @@
         chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
     });
 </script>
+
+<script>
+    let form = document.getElementById('messageForm');
+    let messageInput = document.getElementById('messageInput');
+
+    // Listen for the "keydown" event on the message input
+    messageInput.addEventListener('keydown', function(e) {
+        // Check if the "Enter" key (keyCode 13) is pressed
+        if (e.key === 'Enter') {
+            e.preventDefault(); // Prevent default behavior (adding a newline)
+
+            // Submit the form using AJAX
+            let formData = new FormData(form);  // Create a FormData object with the form data
+
+            // Send the AJAX request
+            $.ajax({
+                url: form.action,  // Use the action URL of the form
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    console.log('Message sent successfully:', response);
+
+                    // Handle the successful response here
+                    // For example, append the message to the chat box or show a success message
+                    // You can also update the chat box or clear the input field
+                    $('textarea[name="message"]').val('');  // Clear the message input after sending
+                    $('#chatBox').scrollTop($('#chatBox')[0].scrollHeight);  // Scroll to bottom of chat box
+                },
+                error: function(error) {
+                    console.error('Error sending message:', error);
+                    alert('حدث خطأ أثناء إرسال الرسالة ,  يرجى المحاولة مرة أخرى');
+                }
+            });
+        }
+    });
+</script>
+
+
 
 @endsection
