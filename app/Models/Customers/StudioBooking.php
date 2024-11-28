@@ -41,7 +41,7 @@ class StudioBooking extends Model
 
     public function studioService()
     {
-        return $this->belongsTo(StudioService::class);
+        return $this->belongsTo(StudioService::class , 'studio_service_id' , 'id');
     }
 
     public function employee()

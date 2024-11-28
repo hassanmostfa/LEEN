@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Sellers\ChatRoom;
 use App\Models\Sellers\Message;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 
 class Customer extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory , HasApiTokens , Notifiable;
 
     protected $table = 'customers';
     protected $fillable = [

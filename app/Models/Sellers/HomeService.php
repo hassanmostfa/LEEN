@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Customers\HomeServiceBookingItem;
 use App\Models\Customers\Rating;
+use App\Models\Customers\HomeBooking;
 use App\Models\Admin\Category;
 use App\Models\Admin\SubCategory;
 
@@ -52,6 +53,10 @@ class HomeService extends Model
 
     public function subCategory(){
         return $this->belongsTo(SubCategory::class);
+    }
+
+    public function home_booking(){
+        return $this->hasMany(HomeBooking::class);
     }
 
 }

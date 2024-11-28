@@ -368,7 +368,6 @@ Route::get('/get-employees/{serviceId}', [ServicesController::class, 'getEmploye
 Route::get('/get-studio-employees/{serviceId}', [ServicesController::class, 'getStudioEmployeesByService'])->name('getStudioEmployeesByService');
 
 
-
 Route::middleware('auth:customer')->group(function () {
     Route::controller(BookingHomeServicesController::class)->group(function () {
         // Book Home Service

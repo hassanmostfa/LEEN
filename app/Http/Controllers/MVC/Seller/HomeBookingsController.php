@@ -90,7 +90,6 @@ class HomeBookingsController extends Controller
         $timetable = Timetable::where('employee_id', $homeBooking->employee_id)
         ->where('date', $homeBooking->date)
         ->where('start_time', $homeBooking->start_time)
-        ->where('end_time', $homeBooking->end_time)
         ->first();
 
         if ($timetable) {

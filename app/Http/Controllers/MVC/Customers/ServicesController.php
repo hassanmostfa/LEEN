@@ -42,6 +42,7 @@ class ServicesController extends Controller
         return view('customer.myOrders.homeOrders', compact('homeBookings', 'homeServices', 'employees'));
     }
 
+    /*****************************************************************************************/
     // get Employees By Home Service
     public function getEmployeesByService($serviceId)
     {
@@ -54,6 +55,7 @@ class ServicesController extends Controller
         return response()->json($employees);
     }
 
+    /*****************************************************************************************/
     // getStudioBookings
     public function getStudioBookings()
     {

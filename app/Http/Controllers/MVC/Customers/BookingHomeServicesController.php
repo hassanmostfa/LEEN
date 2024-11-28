@@ -49,7 +49,7 @@ class BookingHomeServicesController extends Controller
 
     // booking home service
     public function store(Request $request)
-    {    
+    { 
         // Validate the incoming request data
         $validator = Validator::make($request->all(), [
             'home_service_id' => 'required',

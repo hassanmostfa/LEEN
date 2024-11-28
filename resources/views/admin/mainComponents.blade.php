@@ -76,7 +76,7 @@
 			<header class="header">
 				<div class="logo-container">
 					<a href="#" class="logo">
-						<h4>LEEN_LOGO</h4>
+						<img style=" height: 50px!important;" src="{{asset('homePage/images/leen logo.png')}}">
 						<!-- <img src="#" alt="Leen Admin" width="75" height="35" /> -->
 					</a>
 

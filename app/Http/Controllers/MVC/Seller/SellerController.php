@@ -114,10 +114,6 @@ class SellerController extends Controller
             return redirect()->route('seller.loginPage')->with('error', 'غير مصرح لك بالدخول');
         }
     
-        // if ($seller->request_status === 'pending') {
-        //     return redirect()->route('seller.loginPage')->with('error', 'طلبك قيد المراجعة، يرجى الانتظار');
-        // }
-    
         // Check credentials
         if (Auth::guard('seller')->attempt(['email' => $seller->email, 'password' => $request->password]) || 
             Auth::guard('seller')->attempt(['phone' => $seller->phone, 'password' => $request->password])) {
@@ -198,7 +194,4 @@ class SellerController extends Controller
     
         return view('seller.clients', compact('clients'));
     }
-    
-    
-    
 }

@@ -8,10 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Customers\Favourit;
 use App\Models\Customers\CustomerPoint;
 use App\Models\Customers\Rating;
-
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 class Seller extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory , HasApiTokens , Notifiable;
 
     protected $table = 'sellers';
 
@@ -80,5 +81,4 @@ class Seller extends Authenticatable
     public function sellerTimetable(){
         return $this->hasMany(SellerTimetable::class, 'seller_id');
     }
-
 }
