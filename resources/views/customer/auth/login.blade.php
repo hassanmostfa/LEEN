@@ -127,7 +127,7 @@
                     </div>
                     <div class="form-group">
                         <label for="password" style="display: block; text-align: right;">كلمة المرور</label>
-                        <input type="password" name="password" id="password" class="form-control" placeholder="••••••••" required>
+                        <input type="password" name="password" id="password" class="form-control" style="direction: ltr;" placeholder="••••••••" required>
                     </div>
                     <!-- <div class="form-group form-check">
                         <input type="checkbox" name="remember" id="remember" class="form-check-input">

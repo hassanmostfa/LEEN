@@ -144,7 +144,7 @@
                                         <!-- Password -->
                                         <div class="form-group">
                                             <label for="password" style="text-align: right; display: block;">كلمة المرور</label>
-                                            <input type="password" name="password" id="password" class="form-control" placeholder="••••••••" required>
+                                            <input type="password" name="password" id="password" class="form-control text-left" placeholder="••••••••" required>
                                             @error('password')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -152,7 +152,7 @@
 
                                         <div class="form-group">
                                             <label for="password_confirmation" style="text-align: right; display: block;">تأكيد كلمة المرور</label>
-                                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="••••••••" required>
+                                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control text-left" placeholder="••••••••" required>
                                             @error('password_confirmation')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror

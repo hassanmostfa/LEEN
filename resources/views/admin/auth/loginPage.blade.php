@@ -52,7 +52,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">كلمة المرور</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <input type="password" class="form-control" style="direction: ltr;" id="password" name="password" required>
                 </div>
                 <div class="d-grid">
                     <button type="submit" class="btn mt-3" style="background-color: #2f3e3b; color: #ffffff;">تسجيل الدخول</button>
