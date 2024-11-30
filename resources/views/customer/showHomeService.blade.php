@@ -116,7 +116,7 @@
                                             <p class="card-text"><i class="fas fa-user" style="color: #f08b47;"></i> الاسم: {{$homeService->seller->first_name}} {{$homeService->seller->last_name}}</p>
                                             <p class="card-text"><i class="fas fa-envelope" style="color: #f08b47;"></i>البريد الإلكتروني: {{$homeService->seller->email}}</p>
                                             <p class="card-text">
-                                                <i class="fas fa-star" style="color: #f39c12;"></i> 
+                                                <i class="fas fa-star" style="color: #f08b47;"></i> 
                                                 التقييم: 
                                                 @if ($sellerAverageRating)
                                                     {{ $sellerAverageRating }} / 5
