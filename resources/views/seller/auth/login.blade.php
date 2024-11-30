@@ -8,8 +8,10 @@
 <title>تسجيل دخول بائع</title>
 <meta name="author" content="Sayed Khattab">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <!-- Fav Icon -->
 <link rel="icon" href="{{ asset('user-assets/images/favicon.ico') }}" type="image/png">
+
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
