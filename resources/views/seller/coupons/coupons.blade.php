@@ -77,12 +77,12 @@
                     @csrf
                     <div class="mb-3">
                         <label for="code" style="font-weight: 600; font-size: 18px" class="form-label">رمز الكوبون</label>
-                        <input type="text" class="form-control" id="code" name="code" placeholder="ادخل رمز الكوبون" required>
+                        <input type="text" class="form-control" id="code" name="code" placeholder="مثال: ABC123" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="discount_value" style="font-weight: 600; font-size: 18px" class="form-label">قيمة الخصم %</label>
-                        <input type="number" class="form-control" id="discount_value" name="discount_value" placeholder="ادخل قيمة الخصم" step="0.01" required>
+                        <input type="number" class="form-control" id="discount_value" name="discount_value" placeholder="مثال: 10" step="0.01" required>
                     </div>
 
                     <div class="mb-3">
@@ -92,7 +92,7 @@
 
                     <div class="mb-3">
                         <label for="usage_limit" style="font-weight: 600; font-size: 18px" class="form-label">حد الاستخدام</label>
-                        <input type="number" class="form-control" id="usage_limit" name="usage_limit" placeholder="ادخل حد الاستخدام">
+                        <input type="number" class="form-control" id="usage_limit" name="usage_limit" placeholder="مثال: 50">
                     </div>
 
                     <div class="modal-footer">

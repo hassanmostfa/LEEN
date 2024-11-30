@@ -96,7 +96,7 @@
                 <!-- Subcategory Dropdown -->
                 <div class="form-group">
                     <label for="subcategory" style="font-weight: 600 ; font-size: 18px;">اسم التصنيف الفرعي</label>
-                    <input type="text" class="form-control" id="subcategory" name="name" placeholder="ادخل اسم التصنيف الفرعي" required>
+                    <input type="text" class="form-control" id="subcategory" name="name" placeholder="مثال: قص الشعر" required>
                 </div>
 
                  <!-- Category Image -->

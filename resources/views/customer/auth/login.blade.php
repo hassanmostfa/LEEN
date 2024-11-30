@@ -123,7 +123,7 @@
                     @endif
                     <div class="form-group">
                         <label for="login" style="display: block; text-align: right;">البريد الالكتروني أو رقم الهاتف</label>
-                        <input type="text" name="login" id="login" class="form-control text-left" placeholder="البريد الالكتروني أو رقم الهاتف" required>
+                        <input type="text" name="login" id="login" class="form-control text-left" placeholder="6XXXXXXXX او name@company.com" required>
                     </div>
                     <div class="form-group">
                         <label for="password" style="display: block; text-align: right;">كلمة المرور</label>

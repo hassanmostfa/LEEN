@@ -85,7 +85,7 @@
                     <!-- category Name -->
                     <div class="mb-3">
                         <label for="category_name" style="font-weight: 600; font-size: 18px" class="form-label">اسم التصنيف</label>
-                        <input type="text" class="form-control" id="category_name" name="name" placeholder="ادخل اسم التصنيف" required>
+                        <input type="text" class="form-control" id="category_name" name="name" placeholder="مثال: الشعر " required>
                     </div>
 
                     <!-- Category Image -->

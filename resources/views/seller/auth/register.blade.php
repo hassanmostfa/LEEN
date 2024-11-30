@@ -116,7 +116,7 @@
                                             <!-- First Name -->
                                             <div class="col-md-6">
                                                 <label for="first_name" class="form-label">الاسم الأول</label>
-                                                <input type="text" name="first_name" id="first_name" class="form-control" placeholder="الاسم الأول" required>
+                                                <input type="text" name="first_name" id="first_name" class="form-control" placeholder="محمد" required>
                                                 @error('first_name')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -125,7 +125,7 @@
                                             <!-- Last Name -->
                                             <div class="col-md-6">
                                                 <label for="last_name" class="form-label">اسم العائلة</label>
-                                                <input type="text" name="last_name" id="last_name" class="form-control" placeholder="الاسم الأخير" required>
+                                                <input type="text" name="last_name" id="last_name" class="form-control" placeholder="عبدالله" required>
                                                 @error('last_name')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror

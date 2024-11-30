@@ -48,11 +48,11 @@
                 @csrf
                 <div class="mb-3">
                     <label for="email" class="form-label">البريد الإلكتروني</label>
-                    <input type="email" class="form-control" style="direction: ltr;" id="email" name="email" required autofocus>
+                    <input type="email" class="form-control" placeholder="example@gmail.com" style="direction: ltr;" id="email" name="email" required autofocus>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">كلمة المرور</label>
-                    <input type="password" class="form-control" style="direction: ltr;" id="password" name="password" required>
+                    <input type="password" class="form-control" style="direction: ltr;" id="password" placeholder="••••••••" name="password" required>
                 </div>
                 <div class="d-grid">
                     <button type="submit" class="btn mt-3" style="background-color: #2f3e3b; color: #ffffff;">تسجيل الدخول</button>
