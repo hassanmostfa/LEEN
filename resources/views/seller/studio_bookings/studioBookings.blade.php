@@ -122,6 +122,11 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    <div>
+                        {{ $studioBookings->links('pagination::bootstrap-5') }}
+                    </div>
+                    
                 @endif
             </div>
         </div>

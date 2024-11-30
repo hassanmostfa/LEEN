@@ -31,7 +31,9 @@ class CustomersCouponsController extends Controller
         $sellerIds = array_unique(array_merge($homeServiceSellerIds, $studioServiceSellerIds));
 
         // Step 2: Query the coupons table for any coupons from these sellers
-        $coupons = Coupon::whereIn('seller_id', $sellerIds)->get();
+        $coupons = Coupon::whereIn('seller_id', $sellerIds)
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         return view('customer.coupons', compact('coupons'));
     }

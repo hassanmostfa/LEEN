@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <title>عرض تفاصيل الخدمة</title>
 
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ asset('homePage/images/leen logo2.png') }}" type="image/x-icon">
     <!-- Include Google Maps JS API -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL0mf-wYCEO4N6xNkiJaau55bfRxdB4yk&libraries=places"></script>
     
@@ -30,9 +32,12 @@
     <div class="alert alert-danger text-right">{{ Session::get('error') }}</div>
 @endif
 
+
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #2f3e3b;">
-    <a class="navbar-brand text-white" href="{{ route('home')}}">LEEN Logo</a>
+    <a class="navbar-brand text-white" href="{{ route('home')}}">
+        <img style=" height: 50px!important;" src="{{asset('homePage/images/leen logo2.png')}}">
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -40,7 +45,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('home')}}#homeServices">خدمات المنزل</a>
+                    <a class="nav-link text-white" href="{{ route('home')}}#studioServices">خدمات المنزل</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('home')}}#studioServices">خدمات الاستوديو</a>
@@ -50,8 +55,8 @@
 
         <div class="mx-2">
             @if (Auth::guard('customer')->check())
-                <a href="{{ route('customer.profile') }}" class="btn btn-outline-success btn-sm">ملفي الشخصي</a>
-                <a href="{{ route('customer.logout') }}" class="btn btn-outline-danger btn-sm">تسجيل الخروج</a>
+                <a href="{{ route('customer.profile') }}" class="btn btn-sm" style="background-color: transparent; color: white; border: 1px solid white;">ملفي الشخصي</a>
+                <a href="{{ route('customer.logout') }}" class="btn btn-sm" style="background-color: transparent; color: white; border: 1px solid white;">تسجيل الخروج</a>
             @else
                 <a href="{{ route('customer.loginPage') }}" class="btn btn-success btn-sm">تسجيل الدخول</a>
             @endif
@@ -65,59 +70,72 @@
 <div class="text-right m-3">
     <div class="row">
         <div class="col-12">
-            <div class="card shadow px-3">
-                <div class="card-body p-3">
+            <div class="px-3 bg-transparent">
+                <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-6">
-                            <div class="row flex-column">
-                                <h1>{{ $studioService->name }}</h1>
-                                <span>كود الخدمة: {{ $studioService->id }}</span>
-                            </div>
-                                <div class="row my-4 font-weight-bold">
-                                    <span class="ml-4"><i class="fas fa-tag ml-2"></i>التصنيف: {{ $studioService->category->name }}</span>
-                                    <span class="ml-4"><i class="fas fa-bookmark ml-2"></i>الفئة الفرعية: {{ $studioService->subCategory->name }}</span>
-                                    <span class="ml-4"><i class="fas fa-user ml-2"></i>الجنس: {{ $studioService->gender == 'men' ? 'الرجال' : 'النساء' }}</span>
-                                    <span class="ml-4"><i class="fas fa-money-bill ml-2"></i>السعر: {{ $studioService->price }} ر.س</span>
-                                    <span class="ml-4"><i class="fas fa-check-circle ml-2"></i>التقييم :
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-8 bg-white shadow">
+                                    <div class="row flex-column mr-2">
+                                        <h1>{{ $studioService->name }}</h1>
+                                        <span>كود الخدمة: {{ $studioService->id }}</span>
+                                    </div>
+                                    <div class="row my-4 font-weight-bold mr-2">
+                                        <span class="ml-4"><i class="fas fa-tag ml-2" style="color:#2f3e3b;"></i>التصنيف: {{ $studioService->category->name }}</span>
+                                        <span class="ml-4"><i class="fas fa-bookmark ml-2" style="color:#2f3e3b;"></i>الفئة الفرعية: {{ $studioService->subCategory->name }}</span>
+                                        <span class="ml-4"><i class="fas fa-user ml-2" style="color:#2f3e3b;"></i>الجنس: {{ $studioService->gender == 'men' ? 'الرجال' : 'النساء' }}</span>
+                                        <span class="ml-4"><i class="fas fa-money-bill ml-2" style="color:#2f3e3b;"></i>السعر: {{ $studioService->price }} ر.س</span>
+                                        <span class="ml-4"><i class="fas fa-check-circle ml-2" style="color:#2f3e3b;"></i>التقييم :
                                         @if ($averageRating > 0)
                                             {{ $averageRating }} / 5
                                         @else
                                             <span class="badge badge-danger">لا يوجد تقييم</span>
                                         @endif
-                                    </span>   
+                                        </span>
+                                    </div>
+                                    <hr/>
+                                    <!-- Service Details -->
+                                    <div class="description mb-4 mr-2">
+                                        <h2 class="section-title" style="color: #2f3e3b !important;">تفاصيل الخدمة:</h2>
+                                        @foreach (json_decode($studioService->service_details) as $detail)
+                                            <ul>
+                                                <li class="text-justify text-secondary">{{ $detail }}</li>
+                                            </ul>
+                                        @endforeach
+                                    </div>
                                 </div>
 
-                            <!-- Service Details -->
-                            <div class="description mb-4">
-                                <h2 class="section-title" style="color: #2f3e3b !important;">تفاصيل الخدمة:</h2>
-                                @foreach (json_decode($studioService->service_details) as $detail)
-                                    <p class="text-justify text-secondary">{{ $detail }}</p>
-                                @endforeach
-                            </div>
-                            <hr/>
 
-                            <div class="owner mb-4" style="font-size: 18px;line-height: 32px;">
-                                <h2 class="font-weight-bold" style="color: #2f3e3b !important;">عن البائع: </h2>
-                                <div class="d-flex align-items-center justify-content-start gap-2 my-4">
-                                    <img style="width: 70px;height: 70px;" class="rounded-circle img-fluid ml-2" src="{{ asset($studioService->seller->seller_logo )}}" alt="Seller Image">
-                                    <h5 class="ml-3 font-weight-bold my-0">الاسم : {{$studioService->seller->first_name}} {{$studioService->seller->last_name}}</h5>
-                                    <span class="ml-3"><i class="fas fa-envelope ml-2" style="color: ##2f3e3b !important;"></i> البريد الالكتروني : {{$studioService->seller->email}}</span>
-                                    <span><i class="fas fa-star ml-2" style="color: ##2f3e3b !important;"></i> التقييم : 
-                                    @if ($sellerAverageRating)
-                                        {{ $sellerAverageRating }} / 5
-                                    @else
-                                        <span class="badge badge-danger">لا يوجد تقييم</span>
-                                    @endif 
-                                </span>
+                                <div class="col-md-4">
+                                    <div class="card shadow h-100">
+                                        <!-- Seller Logo -->
+                                        <img src="{{ asset($studioService->seller->seller_logo) }}" class="card-img-top" alt="Seller Image" style="width: 100%; height: 180px; object-fit: contain;">
+                                        
+                                        <div class="card-body">
+                                            <h5 class="card-title font-weight-bold text-center" style="color: #f08b47;">عن البائع</h5>
+                                            <p class="card-text"><i class="fas fa-user" style="color: #f08b47;"></i> الاسم: {{$studioService->seller->first_name}} {{$studioService->seller->last_name}}</p>
+                                            <p class="card-text"><i class="fas fa-envelope" style="color: #f08b47;"></i>البريد الإلكتروني: {{$studioService->seller->email}}</p>
+                                            <p class="card-text">
+                                                <i class="fas fa-star" style="color: #f08b47;"></i> 
+                                                التقييم: 
+                                                @if ($sellerAverageRating)
+                                                    {{ $sellerAverageRating }} / 5
+                                                @else
+                                                    <span class="badge badge-danger">لا يوجد تقييم</span>
+                                                @endif
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
 
                         <!-- Booking Section -->
-                        <div class="col-sm-6">
+                        <div class="col-sm-12 mt-3 pr-0">
                             <div class="card shadow">
                                 <div class="card-header bg-white">
-                                    <h6 class="card-title mb-0 text-center">حجز الخدمة</h6>
+                                    <h3 class="card-title mb-0 text-center" style="color: #2f3e3b !important;">حجز الخدمة</h3>
                                 </div>
                                 <div class="card-body">
                                 <form action="{{ route('customer.bookStudioService') }}" method="POST">
@@ -125,50 +143,53 @@
                                     <input type="hidden" name="studio_service_id" value="{{ $studioService->id }}">
                                     <input type="hidden" name="seller_id" value="{{ $studioService->seller_id }}">
 
- 
-                                <!-- Date, Start Time Inputs -->
-                                <div class="mb-3">
-                                    <label for="date" class="form-label">التاريخ</label>
-                                    <input type="text" name="date" id="date" class="form-control flatpickr" placeholder="اختر التاريخ" required>
-                                </div>
+                                    <div class="row">
+                                        <!-- Date & Time Selection Row -->
+                                        <div class="col-md-6 mb-3">
+                                            <label for="date" class="form-label">التاريخ</label>
+                                            <input type="text" name="date" id="date" class="form-control flatpickr" placeholder="اختر التاريخ" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="start_time" class="form-label">الوقت</label>
+                                            <select id="start_time" class="form-control" name="start_time" required>
+                                                <!-- Available times will be populated here -->
+                                            </select>
+                                        </div>
 
-                                <!-- Time selection (this will dynamically update based on the available times) -->
-                                <div class="mb-3">
-                                    <label for="start_time" class="form-label">الوقت</label>
-                                    <select id="start_time" class="form-control" name="start_time" required>
-                                        <!-- Available times will be populated here -->
-                                    </select>
-                                </div>
+                                        <!-- Employee Selection & Payment Amount Row -->
+                                        <div class="col-md-6 mb-3">
+                                            <label for="employee" class="form-label">الموظف</label>
+                                            <select class="form-control" name="employee_id" required>
+                                                <option value="" disabled selected>اختر الموظف</option>
+                                                @foreach ($employees as $id => $name)
+                                                    <option value="{{ $id }}">{{ $name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="paid_amount" class="form-label">مبلغ الدفع</label>
+                                            <input type="number" name="paid_amount" id="paid_amount" class="form-control" placeholder="ادفع مبلغ أو كامل السعر" required>
+                                        </div>
 
-
-                                    <!-- Employee Selection -->
-                                    <div class="mb-3">
-                                        <label for="employee" class="form-label">الموظف</label>
-                                        <select class="form-control" name="employee_id" required>
-                                            <option value="" disabled selected>اختر الموظف</option>
-                                            @foreach ($employees as $id => $name)
-                                                <option value="{{ $id }}">{{ $name }}</option>
-                                            @endforeach
-                                        </select>
+                                        <!-- Total Price Display & Submit Button Row -->
+                                        <div class="col-md-12 mb-3">
+                                            <label for="price" class="form-label">السعر الإجمالي</label>
+                                            <div class="form-control-plaintext border rounded bg-light p-2" id="price">
+                                                {{ $studioService->price }} ريال سعودي
+                                            </div>
+                                        </div>
                                     </div>
-
-                                    <!-- Payment Amount -->
-                                    <div class="mb-3">
-                                        <label for="paid_amount" class="form-label">مبلغ الدفع</label>
-                                        <input type="number" name="paid_amount" id="paid_amount" class="form-control" placeholder="ادفع مبلغ أو كامل السعر" required>
+                                    <div class="my-3 d-flex align-items-end justify-content-center">
+                                        <button type="submit" class="btn" style="background-color: #2f3e3b; color: #fff;">احجز الآن</button>
                                     </div>
-
-                                    <!-- Total Price Display -->
-                                    <div class="mb-3">
-                                        <label for="price" class="form-label"> السعر الإجمالي : {{ $studioService->price }}</label>
-                                    </div>
-
-                                    <button type="submit" class="btn" style="background-color: #2f3e3b; color: #fff;">احجز الآن</button>
                                 </form>
+
+                                </div>
                             </div>
                         </div>
-                </div>
-                        </div>
+
+                    </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -208,5 +229,6 @@
 <script src="{{ asset('JS/sellerRegister.js') }}"></script>
 <!-- Check employee availability -->
 <script src="{{ asset('JS/booking.js') }}"></script>
+
 </body>
 </html>

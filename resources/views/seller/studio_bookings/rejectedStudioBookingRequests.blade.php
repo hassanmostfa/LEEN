@@ -31,7 +31,7 @@
             <div class="card-body">
                 @if($studioBookings->isEmpty())
                 <div class="alert alert-warning text-center m-0 text-bold" style="font-size: 18px;" role="alert">
-                    لا يوجد حجوزات حتي الان
+                    لا يوجد حجوزات مرفوضة حتي الان
                 </div>
                 @else
                     <table class="table table-bordered table-striped table-hover text-center">

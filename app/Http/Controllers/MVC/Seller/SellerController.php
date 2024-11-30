@@ -180,6 +180,7 @@ class SellerController extends Controller
                     'client' => $client,
                     'latestMessage' => $latestMessage,
                     'unreadCount' => $unreadCount,
+                    'latestMessageTimestamp' => $latestMessage?->created_at, // For sorting
                 ];
             } else {
                 // If no chat room exists, still add the client
@@ -188,10 +189,17 @@ class SellerController extends Controller
                     'client' => $client,
                     'latestMessage' => null,
                     'unreadCount' => 0,
+                    'latestMessageTimestamp' => null, // For sorting
                 ];
             }
         }
     
+        // Sort clients by the timestamp of the latest message, newest first
+        usort($clients, function ($a, $b) {
+            return $b['latestMessageTimestamp'] <=> $a['latestMessageTimestamp'];
+        });
+    
         return view('seller.clients', compact('clients'));
     }
+    
 }

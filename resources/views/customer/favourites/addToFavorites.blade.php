@@ -27,9 +27,9 @@
                         <div class="row">
                             @foreach ($sellers as $seller)
                                 <div class="col-md-4 mb-4">
-                                    <div class="card shadow-sm h-100">
+                                    <div class="card shadow h-100">
                                         <!-- Seller Logo -->
-                                        <img src="{{ asset($seller->seller_logo) }}" alt="Seller Logo" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;">
+                                        <img src="{{ asset($seller->seller_logo) }}" alt="Seller Logo" class="card-img-top" style="width: 100%; height: 200px; object-fit: contain;">
 
                                         <div class="card-body">
                                             <!-- Seller Name -->

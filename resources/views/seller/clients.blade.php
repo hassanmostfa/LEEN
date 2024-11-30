@@ -28,7 +28,7 @@
                 <div class="card">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center gap-3">
-                            <img src="{{ $client->profile_photo ? asset($client->profile_photo) : 'https://via.placeholder.com/150' }}" 
+                            <img src="{{ $client->profile_photo ? asset($client->profile_photo) : asset('user-assets/images/chat.png') }}" 
                                  width="70" height="70" alt="client image" class="rounded-circle">
                             <div>
                                 <h5 class="card-title mb-1">{{ $client->first_name }} {{ $client->last_name }}</h5>

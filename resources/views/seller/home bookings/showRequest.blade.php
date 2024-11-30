@@ -87,7 +87,7 @@
                                     <th>حالة الدفع</th>
                                     <td>
                                         @if ($homeBooking->payment_status == 'unpaid')
-                                            <span class="badge bg-dark">غير مدفوع</span>
+                                            <span class="badge bg-dark">مدفوع جزئيا</span>
                                         @elseif ($homeBooking->payment_status == 'paid')
                                             <span class="badge bg-success">مدفوع</span>
                                         @endif

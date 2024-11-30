@@ -22,7 +22,8 @@ class ServicesController extends Controller
         // Get All Home Bookings for the current customer
         $homeBookings = HomeBooking::where('customer_id', Auth::guard('customer')->user()->id)
             ->with('homeServiceBookingItems')
-            ->get();
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
 
         // Initialize homeServices and employees
         $homeServices = collect();
@@ -62,7 +63,8 @@ class ServicesController extends Controller
         // Get All Studio Bookings for the current customer
         $studioBookings = StudioBooking::where('customer_id', Auth::guard('customer')->user()->id)
             ->with('studioServiceBookingItems')
-            ->get();
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
 
         // Initialize studioServices and employees
         $studioServices = collect();

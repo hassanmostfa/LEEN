@@ -13,17 +13,21 @@
 @endif
 
 <div class="container mt-4">
-    <h2 class="mb-4">البائعين المفضلين</h2>
-
     @if ($favourites->isEmpty())
-        <div class="alert alert-info text-center">لا توجد بائعين في المفضلة.</div>
+        <div class="alert alert-warning text-center">لا توجد بائعين في المفضلة.</div>
     @else
-        <div class="row">
+        <div class="row bg-white">
+        <div class="card-header py-2 mb-3 bg-success text-white d-flex align-items-center justify-content-between gap-3">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="fa-solid fa-heart" style="font-size: 25px;"></i>
+                    <h4 class="my-0 flex-grow-1" style="font-size: 20px; font-weight: 400;">المفضلة</h4>
+                </div>
+            </div>
             @foreach ($favourites as $favorite)
                 <div class="col-md-4 mb-3">
-                    <div class="card shadow-sm h-100">
+                    <div class="card shadow h-100 p-3">
                         <!-- Seller Logo -->
-                        <img src="{{ asset($favorite->seller->seller_logo) }}" alt="Seller Logo" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;">
+                        <img src="{{ asset($favorite->seller->seller_logo) }}" alt="Seller Logo" class="card-img-top" style="width: 100%; height: 200px; object-fit: contain;">
                         
                         <div class="card-body">
                             <!-- Seller Name -->

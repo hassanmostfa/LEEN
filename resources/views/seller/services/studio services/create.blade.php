@@ -74,7 +74,7 @@
                             </div>  
                             <!-- Form fields for Step 2 -->
                             
-                            <div class="row">
+                            <div class="row mb-3">
                                 <!-- Show All Categories -->
                                 <div class="col-md-6">
                                     <label for="category_id" style="font-weight: 600; font-size: 18px" class="form-label">التصنيف الاساسي</label>
@@ -95,7 +95,7 @@
                                 </div>
                             </div>
                             
-                            <div class="row">
+                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="has_points" style="font-weight: 600; font-size: 18px" class="form-label">هل يوجد نقاط ولاء ؟</label>
                                     <select id="has_points" class="form-select" onchange="togglePointsInput()">
@@ -105,7 +105,7 @@
                                 </div>
 
                                 <!-- Points Input Field -->
-                                <div class="col-md-6 mt-3" id="points_input" style="display: none;">
+                                <div class="col-md-6" id="points_input" style="display: none;">
                                     <label for="points" style="font-weight: 600; font-size: 18px" class="form-label"> عدد النقاط:</label>
                                     <input type="number" name="points" id="points" class="form-control" min="0">
                                 </div>
@@ -132,7 +132,7 @@
                                 <i class="fa-solid fa-angle-double-right"></i>
                             </div>
                             <!-- Form fields for Step 3 -->
-                            <div class="row">
+                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="price" style="font-weight: 600; font-size: 18px" class="form-label">السعر</label>
                                     <input type="number" class="form-control" id="price" name="price" placeholder="ادخل السعر" required>

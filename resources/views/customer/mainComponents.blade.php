@@ -64,6 +64,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
+<!-- Favicon -->
+<link rel="shortcut icon" href="{{ asset('homePage/images/leen logo2.png') }}" type="image/x-icon">
 
 <!-- Pusher Assets -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

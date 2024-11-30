@@ -24,8 +24,9 @@ class HomeBookingsController extends Controller
         $homeBookings = HomeBooking::where('seller_id', Auth::user()->id)
         ->where('booking_status', 'accepted')
         ->orWhere('booking_status', 'done')
+        ->orderBy('created_at', 'desc')
         ->with('homeServiceBookingItems')
-        ->get();
+        ->paginate(20);
         return view('seller.home bookings.homeBookings', compact('homeBookings'));
     }
 
@@ -34,8 +35,9 @@ class HomeBookingsController extends Controller
     {
         $homeBookings = HomeBooking::where('seller_id', Auth::user()->id)
         ->where('booking_status', 'pending')
+        ->orderBy('created_at', 'desc')
         ->with('homeServiceBookingItems')
-        ->get();
+        ->paginate(20);
         // dd($homeBookings);
 
         return view('seller.home bookings.newRequests', compact('homeBookings'));

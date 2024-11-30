@@ -13,7 +13,18 @@
 @endif
 
 <div class="container bg-white">
-    <h3 class="p-2">مراسلة : {{ $chatRoom->seller->first_name }} {{ $chatRoom->seller->last_name }}</h3>
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h3> 
+                    <img class="rounded-circle mx-2" src="{{asset('user-assets/images/call.png')}}" alt="Customer" width="50" height="50" >
+                    {{ $chatRoom->seller->first_name }} {{ $chatRoom->seller->last_name }}
+                </h3>
+            </div>
+
+            <div>
+                <a href="{{ route('customer.sellers') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i></a>
+            </div>
+        </div>
     <div class="chat-box" id="chatBox">
         @foreach ($messages as $message)
             <div class="d-flex justify-content-{{ $message->sender_type == 'App\Models\Customers\Customer' ? 'start' : 'end' }} mb-3">

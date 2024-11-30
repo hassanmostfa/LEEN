@@ -1,16 +1,16 @@
 .option-card {
     cursor: pointer;
-    border: 1px solid #28a745;
+    border: 1px solid #2f3e3b;
     transition: box-shadow 0.3s ease;
 }
 
 .option-card i {
-    color: #28a745;
+    color: #2f3e3b;
 }
 
 .option-card.selected {
-    border: 2px solid #28a745;
-    background-color: #28a745;
+    border: 2px solid #2f3e3b ;
+    background-color: #2f3e3b;
     color: white !important;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }

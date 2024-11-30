@@ -19,7 +19,8 @@ class StudioBookingsController extends Controller
             $studioBookings = StudioBooking::where('seller_id', Auth::user()->id)
             ->where('booking_status', 'accepted')
             ->orWhere('booking_status', 'done')
-            ->get();
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
             return view('seller.studio_bookings.studioBookings', compact('studioBookings'));
         }
     
@@ -28,7 +29,8 @@ class StudioBookingsController extends Controller
         {
             $studioBookings = StudioBooking::where('seller_id', Auth::user()->id)
             ->where('booking_status', 'pending')
-            ->get();
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
             return view('seller.studio_bookings.newStudioBookingsRequests', compact('studioBookings'));
         }
 

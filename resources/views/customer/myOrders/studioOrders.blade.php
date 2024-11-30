@@ -90,7 +90,13 @@
                                             </ul>
                                         @endif
                                     </td>
-                                    <td>{{ $studioBooking->payment_status }}</td>
+                                    <td>
+                                        @if ($studioBooking->payment_status == 'unpaid')
+                                           <span class="badge bg-dark">مدفوع جزئيا</span>
+                                        @elseif ($studioBooking->payment_status == 'paid')
+                                           <span class="badge bg-success">مدفوع</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $studioBooking->paid_amount }}</td>
                                     <td>
                                         @if ($studioBooking->booking_status == 'pending')
@@ -212,6 +218,11 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    <div>
+                        {{ $studioBookings->links('pagination::bootstrap-5') }}
+                    </div>
+
                 @endif
             </div>
         </div>

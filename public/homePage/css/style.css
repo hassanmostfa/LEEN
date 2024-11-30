@@ -293,13 +293,13 @@ button {
     color : #2f3e3b !important ;
     background : transparent ;
     border : 1px solid #2f3e3b !important;
+    transition: all 0.3s ease-in-out;
 }
 
 .signIn_btn:hover{
     color : #f08b47 !important ;
     background : #2f3e3b ;
-    border : 1px solid #2f3e3b ;
-    transition: all 0.3s;
+    border : 1px solid #f08b47 !important ;
 }
 
 
@@ -619,12 +619,12 @@ button {
     border-radius: 5px;
     font-weight: bold;
     text-transform: uppercase;
+    border: 1px solid #fff;
 }
 
 .seemore_bt a:hover {
-    color: #f5ddb6;
-    background-color: transparent;
-    border: 1px solid #f5ddb6;
+    color: #ffffff;
+    background-color:#f08b47 ;
 }
 
 /* Position carousel controls outside the boxes */

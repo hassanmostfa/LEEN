@@ -95,7 +95,13 @@
                                     </td>
 
 
-                                    <td>{{ $homeBooking->payment_status }}</td>
+                                    <td>
+                                        @if ($homeBooking->payment_status == 'unpaid')
+                                           <span class="badge bg-dark">مدفوع جزئيا</span>
+                                        @elseif ($homeBooking->payment_status == 'paid')
+                                           <span class="badge bg-success">مدفوع</span>
+                                        @endif 
+                                    </td>
                                     <td>{{ $homeBooking->paid_amount }}</td>
                                     <td>
                                         @if ($homeBooking->booking_status == 'pending')
@@ -140,7 +146,7 @@
                                                         <div class="mb-3">
                                                             <label for="services" class="form-label">الخدمات المتاحة</label>
                                                             <select class="form-select" id="services" name="service_id" required>
-                                                                <option value="">Select a Service</option>
+                                                                <option value="">اختر الخدمة</option>
                                                                 @foreach ($homeServices as $homeService)
                                                                     <option value="{{ $homeService->id }}">{{ $homeService->name }}</option>
                                                                 @endforeach
@@ -219,6 +225,10 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    <div>
+                        {{ $homeBookings->links('pagination::bootstrap-5') }}
+                    </div>
                 @endif
             </div>
         </div>

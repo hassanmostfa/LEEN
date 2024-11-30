@@ -84,7 +84,7 @@
                                     <th>حالة الدفع</th>
                                     <td>
                                         @if ($studioBooking->payment_status == 'unpaid')
-                                            <span class="badge bg-dark">غير مدفوع</span>
+                                            <span class="badge bg-dark">مدفوع جزئيا</span>
                                         @elseif ($studioBooking->payment_status == 'paid')
                                             <span class="badge bg-success">مدفوع</span>
                                         @endif

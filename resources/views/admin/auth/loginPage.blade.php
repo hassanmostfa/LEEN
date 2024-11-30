@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> تسجيل دخول مشرف</title>
+    <!-- Fav Icon -->
+    <link rel="icon" href="{{ asset('user-assets/images/favicon.ico') }}" type="image/png">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body, html {
-            height: 100%;
             direction: rtl; /* Set the direction to RTL */
+            background-color: #2f3e3b;
         }
         .login-container {
-            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -20,7 +22,8 @@
             width: 100%;
             max-width: 400px;
             padding: 20px;
-            background-color: #fff;
+            background-color: #ffffff;
+            color : #2f3e3b;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -34,9 +37,13 @@
     <div class="alert alert-danger">{{ Session::get('error') }}</div>
 @endif
 
+    <div class="d-flex justify-content-center align-items-center my-5">
+        <img src="{{ asset('homePage/images/leen logo2.png') }}" width="100" height="100" alt="Leen Admin"/>
+    </div>
+
     <div class="container-fluid login-container">
         <div class="login-box">
-            <h3 class="text-center mb-4  fw-bold card-title">تسجيل دخول مشرف</h3>
+            <h3 class="text-center mb-4 pb-3 fw-bold card-title" style="border-bottom: 1px solid #2f3e3b;">تسجيل دخول مشرف</h3>
             <form method="POST" action="{{route('admin.login')}}">
                 @csrf
                 <div class="mb-3">
@@ -48,7 +55,7 @@
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">تسجيل الدخول</button>
+                    <button type="submit" class="btn mt-3" style="background-color: #2f3e3b; color: #ffffff;">تسجيل الدخول</button>
                 </div>
             </form>
         </div>

@@ -96,7 +96,14 @@
                                         @endif
                                     </td>
                                     
-                                    <td>{{ $homeBooking->payment_status }}</td>
+                                    <td>
+                                        @if ($homeBooking->payment_status == 'unpaid')
+                                            <span class="badge bg-primary">مدفوع جزئيا</span>
+                                        @elseif ($homeBooking->payment_status == 'paid')
+                                            <span class="badge bg-success">مدفوع</span>
+                                        @endif
+                                    </td>
+
                                     <td>{{ $homeBooking->paid_amount }}</td>
                                     <td>
                                         @if ($homeBooking->booking_status == 'pending')
@@ -115,6 +122,11 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    <div>
+                    {{ $homeBookings->links('pagination::bootstrap-5') }}
+                    </div>
+
                 @endif
             </div>
         </div>

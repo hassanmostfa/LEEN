@@ -4,13 +4,16 @@
 		<!-- Basic -->
 		<meta charset="UTF-8">
 
-		<title>LEEN | Seller Dashboard</title>
+		<title>لوحة تحكم مقدم الخدمة | لين</title>
 		<meta name="keywords" content="HTML5 Admin Template" />
 		<meta name="description" content="LeenAdmin - Responsive HTML5 Template">
 		<meta name="author" content="okler.net">
 
 		<!-- Mobile Metas -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<!-- Fav Icon -->
+		<link rel="icon" href="{{ asset('user-assets/images/favicon.ico') }}" type="image/png">
 
 		<!-- Web Fonts  -->
 		<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">

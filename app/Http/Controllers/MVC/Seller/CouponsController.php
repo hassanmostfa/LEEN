@@ -11,7 +11,9 @@ class CouponsController extends Controller
 {
     public function index()
     {
-        $coupons = Coupon::where('seller_id', auth()->id())->get();
+        $coupons = Coupon::where('seller_id', auth()->id())
+        ->orderBy('created_at', 'desc')
+        ->get();
         return view('seller.coupons.coupons', compact('coupons'));
     }
 

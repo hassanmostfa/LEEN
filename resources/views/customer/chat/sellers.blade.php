@@ -27,7 +27,7 @@
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center gap-3">
                             <img src="{{ $seller->seller_logo ? asset($seller->seller_logo) : 'https://via.placeholder.com/150' }}" 
-                                 width="70" height="70" alt="seller image" class="rounded-circle">
+                                 width="70" height="70" alt="seller image" class="rounded-circle" style="object-fit: contain;">
                             <div>
                                 <h5 class="card-title mb-1">{{ $seller->first_name }} {{ $seller->last_name }}</h5>
                                 

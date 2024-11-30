@@ -9,7 +9,7 @@
 <meta name="author" content="Sayed Khattab">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Fav Icon -->
-<link rel="icon" href="user-assets/images/favicon.png" type="image/png">
+<link rel="icon" href="{{ asset('user-assets/images/favicon.ico') }}" type="image/png">
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -41,7 +41,11 @@
 <!-- Include Google Maps JS API -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAL0mf-wYCEO4N6xNkiJaau55bfRxdB4yk&libraries=places"></script>
 
-
+<style>
+    body {
+        background-color: #2f3e3b;
+    }
+</style>
 </head>
 <!-- page wrapper -->
 <body>
@@ -49,8 +53,6 @@
         <!-- preloader -->
         <div class="preloader"></div>
         <!-- preloader -->
-
-       
 
        <!-- Mobile Menu  -->
         <div class="mobile-menu">
@@ -71,8 +73,8 @@
         <div class="container">
             <div class="row justify-content-center" style="margin-top: 100px; margin-bottom: 50px;">
                 <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header text-center bg-primary text-white" style="color: #2f3e3b;">تسجيل بائع جديد</div>
+                    <div class="card shadow ">
+                        <div class="card-header text-center bg-white" style="color: #2f3e3b; font-weight: 600; font-size: 20px;">تسجيل بائع جديد</div>
                         <div class="card-body py-2">
                             <form method="POST" id="phone-form" dir="rtl">
                                 @csrf
@@ -83,15 +85,18 @@
                                         <input type="text" class="form-control" id="phone_input" name="phone" placeholder="5XXXXXXXX" required oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 9);">
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary mt-3 w-100">إرسال كود التحقق</button>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <button type="submit" class="btn mt-3" style="background-color: #2f3e3b; color: #ffffff;">إرسال كود التحقق</button>
+                                </div>
                             </form>
 
                             <div id="otp-section" style="display:none;" dir="ltr">
                                 <form method="POST" id="otp-form">
                                     @csrf
                                     <input type="text" class="form-control mt-3" name="otp" placeholder="أدخل كود التحقق" required>
-                                    <div class="row">
-                                        <button type="submit" class="btn btn-primary mt-3 w-100">تحقق من OTP</button>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <button type="submit" class="btn mt-3" style="background-color: #2f3e3b; color: #ffffff;">تحقق من OTP</button>
+                                    </div>
                                 </form>
 
                                     <!-- Resend OTP -->
@@ -237,8 +242,8 @@
                                             <label class="form-check-label" style="text-align: right; display: block;" for="terms">لقد وافقت علي <a href="#">السياسات والشروط</a></label>
                                         </div>
 
-                                        <button type="button" class="btn btn-secondary" onclick="prevStep()">السابق</button>
-                                        <button type="submit" class="btn btn-success" style="background-color: #2f3e3b; border-color: #2f3e3b;">انشاء حساب</button>
+                                        <button type="button" class="btn btn-secondary mb-3" onclick="prevStep()">السابق</button>
+                                        <button type="submit" class="btn btn-success mb-3" style="background-color: #2f3e3b; border-color: #2f3e3b;">انشاء حساب</button>
                                     </div>
                                 </form>
                             </div>

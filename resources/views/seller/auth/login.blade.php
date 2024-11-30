@@ -9,8 +9,7 @@
 <meta name="author" content="Sayed Khattab">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Fav Icon -->
-<link rel="icon" href="user-assets/images/favicon.png" type="image/png">
-
+<link rel="icon" href="{{ asset('user-assets/images/favicon.ico') }}" type="image/png">
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
@@ -31,20 +30,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
 
 <style>
+    body {
+        background: #2f3e3b;
+    }
     .login-container {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
     }
     .login-card {
         width: 100%;
         max-width: 450px;
-        background: white;
         padding: 2rem;
         border-radius: 8px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         direction: rtl;
+        background-color: #fff;
     }
     .login-card h1 {
         text-align: center;
@@ -94,10 +95,19 @@
 @endif
     <div class="boxed_wrapper">
 
+            <!-- preloader -->
+            <div class="preloader"></div>
+            <!-- preloader -->
 
+
+    <div class="d-flex justify-content-center align-items-center my-4">
+        <img src="{{ asset('homePage/images/leen logo2.png') }}" width="100" height="100" alt="Leen Seller"/>
+    </div>
+
+    </div>
         <div class="login-container">
             <div class="login-card">
-                <h1 style="color: #2f3e3b;"> تسجيل دخول بائع </h1>
+                <h1 class="pb-3" style="color: #2f3e3b; border-bottom: 1px solid #2f3e3b;"> تسجيل دخول بائع </h1>
                 <form method="post" action="{{ route('seller.login') }}">
                     @csrf
                     @if ($errors->any())
