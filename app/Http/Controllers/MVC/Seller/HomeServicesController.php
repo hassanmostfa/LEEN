@@ -25,7 +25,9 @@ class HomeServicesController extends Controller
     public function index()
     {
         // Show Home Services
-        $homeServices = HomeService::where('seller_id', Auth::user()->id)->get();
+        $homeServices = HomeService::where('seller_id', Auth::user()->id)
+        ->with('ratings')
+        ->get();
 
         // Category name for each service
         foreach ($homeServices as $service) {

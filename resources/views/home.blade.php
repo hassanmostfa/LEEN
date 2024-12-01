@@ -9,7 +9,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="viewport" content="initial-scale=1, maximum-scale=1">
       <!-- site metas -->
-      <title>LEEN</title>
+      <title>لين</title>
       <!-- Bootstrap CSS -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
       <link href="https://fonts.googleapis.com/css2?family=Almarai&display=swap" rel="stylesheet">
@@ -23,8 +23,10 @@
       <link rel="stylesheet" type="text/css" href="{{ asset('homePage/css/style.css') }}">
       <!-- Responsive-->
       <link rel="stylesheet" href="{{ asset('homePage/css/responsive.css') }}">
-      <!-- fevicon -->
-      <link rel="icon" href="{{ asset('homePage/images/fevicon.png') }}" type="image/gif" />
+
+      <!-- Favicon -->
+      <link rel="shortcut icon" href="{{ asset('homePage/images/leen logo2.png') }}" type="image/x-icon">
+
       <!-- Scrollbar Custom CSS -->
       <link rel="stylesheet" href="{{ asset('homePage/css/jquery.mCustomScrollbar.min.css' ) }}">
       <!-- Tweaks for older IEs-->
