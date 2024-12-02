@@ -114,8 +114,8 @@ class HomeServicesController extends Controller
             $homeService->percentage = $request->percentage;
             $homeService->points = $request->points ?? 0;
             $homeService->save();
-    
-            return redirect()->route('seller.homeServices')->with('success', 'تم اضافة الخدمة بنجاح');
+
+            return response()->json(['success' => 'تم اضافة الخدمة بنجاح'], 200);
         } catch (\Throwable $th) {
             // Handle any errors during the save operation
             return response()->json(['error' => $th->getMessage()], 500);

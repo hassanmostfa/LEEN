@@ -114,7 +114,7 @@ class StudioServicesController extends Controller
             $homeService->points = $request->points ?? 0;
             $homeService->save();
     
-            return redirect()->route('seller.studioServices')->with('success', 'تم اضافة الخدمة بنجاح');
+            return response()->json(['success' => 'تم اضافة الخدمة بنجاح']);
         } catch (\Throwable $th) {
             // Handle any errors during the save operation
             return redirect()->route('seller.studioServices')->with('error', 'حدث خطأ: ' . $th->getMessage());

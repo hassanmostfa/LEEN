@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <form id="multiStepForm" action="{{ route('seller.studioServices.store') }}" method="POST">
+                <form id="multiStepForm" action="{{ route('seller.studioServices.store') }}" method="POST" onsubmit="event.preventDefault(); submitForm();">
                     @csrf
                     <div class="steps-content">
                         <!-- Step 1 -->
@@ -35,12 +35,12 @@
                             </div>
                             <!-- Form fields for Step 1 -->
                             <div class="mb-3">
-                                <label for="name" style="font-weight: 600; font-size: 18px" class="form-label">اسم الخدمة</label>
+                                <label for="name" style="font-weight: 600; font-size: 18px" class="form-label">اسم الخدمة <span title="هذا الحقل مطلوب" class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="name" name="name" placeholder="مثال: كي الشعر باحدث الادوات " required>
                             </div>
 
                             <div class="mb-3">
-                                <label for="name" style="font-weight: 600; font-size: 18px" class="form-label">هذه الخدمة خاصة ب :</label>
+                                <label for="name" style="font-weight: 600; font-size: 18px" class="form-label">هذه الخدمة خاصة ب : <span title="هذا الحقل مطلوب" class="text-danger">*</span></label>
                                 <div class="row justify-content-center m-3">
                                     <div class="col-md-4">
                                         <div class="card text-center option-card" id="option-men" onclick="selectOption('men')">
@@ -77,7 +77,7 @@
                             <div class="row mb-3">
                                 <!-- Show All Categories -->
                                 <div class="col-md-6">
-                                    <label for="category_id" style="font-weight: 600; font-size: 18px" class="form-label">التصنيف الاساسي</label>
+                                    <label for="category_id" style="font-weight: 600; font-size: 18px" class="form-label">التصنيف الاساسي <span title="هذا الحقل مطلوب" class="text-danger">*</span></label>
                                     <select class="form-select" id="category_id" name="category_id" required onchange="loadSubcategories(this.value)">
                                         <option selected disabled>اختر التصنيف الاساسي</option>
                                         @foreach ($categories as $category)
@@ -87,7 +87,7 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label for="subcategory" style="font-weight: 600; font-size: 18px" class="form-label">3 - التصنيف الفرعي</label>
+                                    <label for="subcategory" style="font-weight: 600; font-size: 18px" class="form-label">التصنيف الفرعي <span title="هذا الحقل مطلوب" class="text-danger">*</span></label>
                                     <select id="subcategory" name="sub_category_id" class="form-control" required>
                                         <option value="" disabled selected>اختر التصنيف الفرعي</option>
                                         <!-- <option>Subcategories will be loaded dynamically based on the selected category.</option> -->
@@ -112,7 +112,7 @@
                             </div>
 
                             <div class="col-md-12">
-                                <label for="service_details" style="font-weight: 600; font-size: 18px" class="form-label">تفاصيل الخدمة</label>
+                                <label for="service_details" style="font-weight: 600; font-size: 18px" class="form-label">تفاصيل الخدمة <span title="هذا الحقل مطلوب" class="text-danger">*</span></label>
                                 <div id="array-items-container">
                                     <div class="array-item">
                                         <input type="text" class="form-control" name="service_details[]" placeholder="أدخل عنصر" required>
@@ -134,11 +134,11 @@
                             <!-- Form fields for Step 3 -->
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="price" style="font-weight: 600; font-size: 18px" class="form-label">السعر</label>
+                                    <label for="price" style="font-weight: 600; font-size: 18px" class="form-label">السعر <span title="هذا الحقل مطلوب" class="text-danger">*</span></label>
                                     <input type="number" class="form-control" id="price" name="price" placeholder="ادخل السعر" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="booking_status" style="font-weight: 600; font-size: 18px" class="form-label">نوع الحجز</label>
+                                    <label for="booking_status" style="font-weight: 600; font-size: 18px" class="form-label">نوع الحجز <span title="هذا الحقل مطلوب" class="text-danger">*</span></label>
                                     <select class="form-select" id="booking_status" name="booking_status" required>
                                         <option selected disabled>اختر نوع الحجز</option>
                                         <option value="immediate">فوري</option>
@@ -150,7 +150,7 @@
                              <!-- Discount -->
                              <div class="row">
                                 <div class="col-md-6">
-                                    <label for="discount" style="font-weight: 600; font-size: 18px" class="form-label">هل يوجد خصم ؟ </label>
+                                    <label for="discount" style="font-weight: 600; font-size: 18px" class="form-label">هل يوجد خصم ؟  <span title="هذا الحقل مطلوب" class="text-danger">*</span></label>
                                     <select class="form-select" id="discount" name="discount" required>
                                         <option selected disabled>اختر خيار</option>
                                         <option value="1">نعم</option>
@@ -164,10 +164,10 @@
                             </div>
 
                             <div class="col-md-12 my-3">
-                                <label for="employees" style="font-weight: 600; font-size: 18px" class="form-label">الموظفين(يمكنك اختيار اكثر من موظف)</label>
+                                <label for="employees" style="font-weight: 600; font-size: 18px" class="form-label">الموظفين(يمكنك اختيار اكثر من موظف) <span title="هذا الحقل مطلوب" class="text-danger">*</span></label>
                                 <div id="employees-container">
                                     @foreach ($employees as $employee)
-                                        <div class="form-check">
+                                        <div class="form-check" style="width: 30%;">
                                             <input type="checkbox" class="form-check-input" id="employee_{{ $employee->id }}" name="employees[]" value="{{ $employee->id }}">
                                             <label class="form-check-label" for="employee_{{ $employee->id }}"><ul>
                                                 <li>{{ $employee->name }}</li>
@@ -184,6 +184,20 @@
                         <button type="button" class="btn btn-outline-success" id="nextStep">التالي</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" style="text-align: center; font-size: 20px; font-weight: 600" >
+                <!-- Success message will be injected here -->
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn" style="background-color: #2f3e3b; color: white;" onclick="window.location.href='{{ route('seller.studioServices.create') }}'">حسنا</button>
             </div>
         </div>
     </div>
@@ -209,6 +223,40 @@ function togglePointsInput() {
     var pointsInput = document.getElementById("points_input");
     pointsInput.style.display = select.value === "yes" ? "block" : "none";
 }
+</script>
+
+<script>
+// Function to handle form submission via AJAX
+function submitForm() {
+    let formData = new FormData(document.getElementById('multiStepForm')); // Get the form data
+
+    fetch('{{ route('seller.studioServices.store') }}', {  // Use the form action URL
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.json())  // Expecting JSON response
+    .then(data => {
+        if (data.success) {
+            // If success message is returned, show the modal
+            showModal(data.success);
+        } else {
+            // Handle any errors if needed (you can show an error message here)
+            console.log('Error:', data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+// Function to display the modal with the success message
+function showModal(message) {
+    const modal = document.getElementById('successModal');
+    const modalMessage = modal.querySelector('.modal-body');
+    modalMessage.textContent = message;  // Set the success message in the modal body
+    $(modal).modal('show');  // Show the modal using Bootstrap (or any other modal library you are using)
+}
+
 </script>
 @endsection
 
