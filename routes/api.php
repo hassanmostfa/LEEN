@@ -57,6 +57,8 @@ use App\Http\Controllers\API\Customers\CustomerChatController;
         Route::get('/studioService/{id}','showStudioService'); // Show Studio Service
         Route::get('/gallaryImages','getAllGallaryImages'); // Get All Gallary Images
         Route::get('/reels','getAllReels'); // Get All Reels
+        Route::get('/categories','getAllCategories'); // Get All Categories
+        Route::get('/subCategories','getAllSubCategories'); // Get All SubCategories
     });
 /*==================================================================================*/
 

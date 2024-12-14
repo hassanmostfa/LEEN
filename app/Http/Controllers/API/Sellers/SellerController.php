@@ -21,10 +21,9 @@ use App\Http\Requests\UpdateSellerRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\JsonResponse;
 
-
 class SellerController extends Controller
 {
-    public function registerSeller(RegisterSellerRequest $request)
+    public function registerSeller(Request $request)
     {
         try {
             $seller = Seller::create([

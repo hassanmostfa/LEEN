@@ -13,6 +13,8 @@ use App\Models\Sellers\HomeService;
 use App\Models\Sellers\StudioService;
 use App\Models\Sellers\Image;
 use App\Models\Sellers\Reel;
+use App\Models\Admin\Category;
+use App\Models\Admin\SubCategory;
 
 class HomeController extends Controller
 {
@@ -71,6 +73,30 @@ class HomeController extends Controller
         try {
             $reels = Reel::all();
             return response()->json(['status' => 'success', 'data' => ReelsResource::collection($reels)]);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => $th->getMessage()]);
+        }
+    }
+
+    /***********************************************************************************************/
+        // Get all Categories with their SubCategories
+        public function getAllCategories() {
+            try {
+                // Retrieve all categories and load their related subcategories
+                $categories = Category::with('subCategories')->get();
+
+                return response()->json(['status' => 'success', 'data' => $categories]);
+            } catch (\Throwable $th) {
+                return response()->json(['status' => 'error', 'message' => $th->getMessage()]);
+            }
+        }
+
+    /************************************************************************************************/
+    // get all SubCategories
+    public function getAllSubCategories(){
+        try {
+            $subCategories = SubCategory::all();
+            return response()->json(['status' => 'success', 'data' => $subCategories]);
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'message' => $th->getMessage()]);
         }
