@@ -119,7 +119,7 @@ public function logout(Request $request)
 public function getSellerInfo(Request $request)
 {
     try{
-        $seller = Auth::guard('seller')->user();
+        $seller = Auth::user();
         return response()->json(['status' => 'success', 'data' => new SellerResource($seller)]);
     }catch(\Exception $e){
         return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
@@ -217,7 +217,7 @@ public function getAllClients(Request $request)
 {
     try {
         // Get the seller ID using Sanctum guard
-        $sellerId = Auth::guard('seller')->user()->id;
+        $sellerId = Auth::user()->id;
 
         // Get home and studio clients by seller ID
         $homeClients = HomeBooking::where('seller_id', $sellerId)->pluck('customer_id')->toArray();

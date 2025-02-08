@@ -214,5 +214,6 @@ public function getCustomerSellers()
         ];
     });
 
-    return response()->json(['status' => 'success', 'data' => $sellersWithChatDetails]);}
+    return response()->json(['status' => 'success', 'data' => $sellersWithChatDetails]);
+}
 }

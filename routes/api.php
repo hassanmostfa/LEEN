@@ -17,6 +17,7 @@ use App\Http\Controllers\API\Sellers\ReelsController;
 use App\Http\Controllers\API\Sellers\CouponsController;
 use App\Http\Controllers\API\Sellers\ChatController;
 use App\Http\Controllers\API\Sellers\SellersTimetablesController;
+use App\Http\Controllers\API\Sellers\NotificationsController;
 
 use App\Http\Controllers\API\Customers\CustomerController;
 use App\Http\Controllers\API\Customers\ServicesController;
@@ -167,6 +168,12 @@ use App\Http\Controllers\API\Customers\CustomerChatController;
             Route::put('/seller/timetables/update/{id}', 'update');// Update Timetable
             Route::delete('/seller/timetables/destroy/{id}', 'destroy');// Delete Timetable
         });
+
+        // Notifications Routes 
+        Route::controller(NotificationsController::class)->group(function () {
+            Route::get('/seller/notifications','index'); // Get All Notifications
+            Route::put('/seller/notifications/isRead','markAllAsRead'); // Update Notification 
+        });
     });
 /*==================================================================================*/
 
@@ -241,3 +248,23 @@ use App\Http\Controllers\API\Customers\CustomerChatController;
 
     });
 /*==================================================================================*/
+
+Route::post('/broadcasting/auth', function (Request $request) {
+    try {
+        return Broadcast::auth($request);
+    } catch (Exception $e) {
+        \Log::error('Pusher auth error: ' . $e->getMessage());
+        return response()->json(['error' => 'Authentication failed'], 500);
+    }
+})->middleware('auth:sanctum'); // For Sellers
+
+
+
+Route::post('/broadcasting/auth/customer', function (Request $request) {
+    try {
+        return Broadcast::auth($request);
+    } catch (Exception $e) {
+        \Log::error('Pusher auth error: ' . $e->getMessage());
+        return response()->json(['error' => 'Authentication failed'], 500);
+    }
+})->middleware('auth:sanctum'); // For Customers

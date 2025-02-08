@@ -8,7 +8,7 @@ use App\Http\Resources\ChatRoomResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Sellers\ChatRoom;
-use App\Models\Sellers\Message;;
+use App\Models\Sellers\Message;
 
 class CustomerChatController extends Controller
 {
