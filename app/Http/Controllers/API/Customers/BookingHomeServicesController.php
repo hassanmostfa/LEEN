@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Customers\HomeBooking;
 use App\Models\Customers\HomeServiceBookingItem;
 use App\Models\Sellers\Timetable;
-
+use App\Models\Notification;
 
     class BookingHomeServicesController extends Controller
     {
@@ -19,7 +19,7 @@ use App\Models\Sellers\Timetable;
         {
             try{
                 $homeBookings = HomeBooking::where('customer_id', auth()->user()->id)->get();
-                return response()->json(HomeBookingResource::collection($homeBookings));
+                return response()->json(['status' => 'success', 'data' => HomeBookingResource::collection($homeBookings)]);
             }catch(\Exception $e){
                 return response()->json([ 'success' => false,'message' => $e->getMessage()]);
             }
@@ -52,6 +52,8 @@ use App\Models\Sellers\Timetable;
                 'start_time' => $request->start_time,
                 'paid_amount' => $request->paid_amount,
                 'location' => $request->location,
+                'copoun_discount' => $request->copoun_discount ?? 0,
+                'service_discount' => $request->service_discount ?? 0,
             ]);
         
             // Create a timetable record for the selected employee
@@ -62,7 +64,18 @@ use App\Models\Sellers\Timetable;
                 'start_time' => $request->start_time,
                 'status' => 'busy',
             ]);
-        return response()->json(['message' => 'تم انشاء الحجز بنجاح الرجاء الانتظار حتى يتم الموافقة عليه']);
+
+        // Create a notification for the seller
+        Notification::create([
+            'customer_id' => auth()->user()->id,
+            'seller_id' => $request->seller_id,
+            'title' => 'حجز منزلي جديد',
+            'sender_type' => 'customer',
+            'content' => 'لديك حجز جديد من العميل ' . auth()->user()->first_name . ' ' . auth()->user()->last_name . ' للموعد ' . $request->booking_date . '. يرجى تأكيد الحجز.',
+            'category' => 'booking',
+        ]);
+
+        return response()->json(['status' => 'success','message' => 'تم انشاء الحجز بنجاح الرجاء الانتظار حتى يتم الموافقة عليه' , 'data' => HomeBookingResource::make($homeBooking)], 200);
         }
         
         /************************************************************************************/
@@ -140,4 +153,27 @@ use App\Models\Sellers\Timetable;
                 return response()->json(['error' => $e->getMessage()], 500);
             }
         }
+
+        /********************************************************************************************/
+        public function cancelHomeBooking($id){
+            $homeBooking = HomeBooking::findOrFail($id);
+            $homeBooking->booking_status = 'cancelled';
+            $homeBooking->save();
+
+       // Create a cancel notification for the seller
+        Notification::create([
+            'customer_id' => auth()->user()->id,
+            'seller_id' => $homeBooking->seller_id,
+            'title' => 'تم الغاء حجز منزلي',
+            'sender_type' => 'customer',
+            'content' => 'لقد قام العميل ' . auth()->user()->first_name . ' ' . auth()->user()->last_name . ' بإلغاء الحجز الذي كان محددًا للموعد ' . $homeBooking->booking_date . ' في الساعة ' . $homeBooking->start_time . '.',
+            'category' => 'booking',
+        ]);
+
+            return response()->json(['message' => 'تم الغاء الحجز بنجاح'], 200);
+        }
+        
     }
+
+    // Cancel booking home service
+

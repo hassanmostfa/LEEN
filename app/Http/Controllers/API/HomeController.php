@@ -27,7 +27,7 @@ class HomeController extends Controller
             return response()->json(['status' => 'error', 'message' => $th->getMessage()]);
         }
     }
-
+/**********************************************************************************/
     // Show Home Service Details
     public function showHomeService($id){
         try {
@@ -37,7 +37,7 @@ class HomeController extends Controller
             return response()->json(['status' => 'error', 'message' => $th->getMessage()]);
         }
     }
-
+/**********************************************************************************/
     // Get all studio bookings
     public function getAllStudioServices(){
         try {
@@ -47,7 +47,7 @@ class HomeController extends Controller
             return response()->json(['status' => 'error', 'message' => $th->getMessage()]);
         }
     }
-
+    /**********************************************************************************/
     // Show Studio Service Details
     public function showStudioService($id){
         try{
@@ -57,7 +57,7 @@ class HomeController extends Controller
             return response()->json(['status' => 'error', 'message' => $th->getMessage()]);
         }
     }
-
+    /**********************************************************************************/
     // get all gallary images
     public function getAllGallaryImages(){
         try {
@@ -67,7 +67,7 @@ class HomeController extends Controller
             return response()->json(['status' => 'error', 'message' => $th->getMessage()]);
         }
     }
-
+/************************************************************************************/
     // get all reels 
     public function getAllReels(){
         try {

@@ -21,20 +21,31 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('chat-room.{chatRoomId}', function ($user, $chatRoomId) {
-    // Find the chat room by ID
-    $chatRoom = ChatRoom::find($chatRoomId);
-    
-    // Check if the chat room exists
-    if ($chatRoom) {
-        // Check if the user is a seller or customer and authorize based on that
-        if ($user instanceof \App\Models\Sellers\Seller) {
-            return $chatRoom->canAccessChatRoomAsSeller($user);
-        } elseif ($user instanceof \App\Models\Customers\Customer) {
-            return $chatRoom->canAccessChatRoomAsCustomer($user);
-        }
+    \Log::info("Checking access for user ID: " . $user->id . " in chat room: " . $chatRoomId);
+
+    $chatRoom = \App\Models\Sellers\ChatRoom::find($chatRoomId);
+    if (!$chatRoom) {
+        \Log::error("Chat room not found: " . $chatRoomId);
+        return false;
     }
 
-    return false; // Unauthorized access if the chat room does not exist or user can't access
+    // Check if the user is a seller
+    if ($user instanceof \App\Models\Sellers\Seller) {
+        $access = $chatRoom->canAccessChatRoomAsSeller($user);
+        \Log::info("Seller access check: " . ($access ? "GRANTED" : "DENIED"));
+        return $access;
+    }
+
+    // Check if the user is a customer
+    if ($user instanceof \App\Models\Customers\Customer) {
+        $access = $chatRoom->canAccessChatRoomAsCustomer($user);
+        \Log::info("Customer access check: " . ($access ? "GRANTED" : "DENIED"));
+        return $access;
+    }
+
+    \Log::error("Unauthorized user type for chat room access.");
+    return false;
 });
+
 
 

@@ -6,19 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\HomeServiceResource;
 use App\Http\Resources\StudioServiceResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Sellers\SellerTimetable;
 use App\Models\Sellers\Timetable;
 use App\Models\Sellers\HomeService;
 use App\Models\Sellers\StudioService;
 use App\Models\Sellers\Employee;
+use App\Models\Sellers\Seller;
+use App\Models\Customers\Rating;
 class ServicesController extends Controller
 {
     public function getSellerActiveWeekdays($sellerId)
     {
         try {
              // Retrieve the seller's timetable for active weekdays
-            $activeDays = SellerTimetable::where('seller_id', $sellerId)->pluck('day')->toArray();
-            return response()->json(['activeDays' => $activeDays]);
+            $activeDays = SellerTimetable::where('seller_id', $sellerId)->get();
+            return response()->json(['status' => 'success', 'data' => $activeDays]);
         }catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -132,4 +135,54 @@ class ServicesController extends Controller
 
         return response()->json($employees);
     }
+    /*****************************************************************************************/
+    // Get All Sellers
+    public function getSellers()
+    {
+        try {
+            $sellers = Seller::all()->map(function ($seller) {
+                // Calculate average rating
+                $averageRating = Rating::where('seller_id', $seller->id)->avg('rating');
+                $seller->average_rating = number_format($averageRating, 1) ?? 0;
+    
+                // Fetch unique sub-category names from studio services
+                $studioSubCategories = StudioService::where('seller_id', $seller->id)
+                    ->with('subCategory') // Assuming the relation is named 'subCategory'
+                    ->get()
+                    ->pluck('subCategory.name');
+    
+                // Fetch unique sub-category names from home services
+                $homeSubCategories = HomeService::where('seller_id', $seller->id)
+                    ->with('subCategory') // Assuming the relation is named 'subCategory'
+                    ->get()
+                    ->pluck('subCategory.name');
+    
+                // Merge both arrays, filter unique values, and reindex
+                $allSubCategories = $studioSubCategories->merge($homeSubCategories)->unique()->values();
+    
+                $seller->service_subcategories = $allSubCategories;
+    
+                return $seller;
+            });
+    
+            // Sort sellers by rating in descending order
+            $sellers = $sellers->sortByDesc('average_rating')->values();
+    
+            return response()->json(['status' => 'success', 'sellers' => $sellers]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    /******************************************************************************************/
+    // Get All Employees for a specific seller
+    public function getSellerEmployees($sellerId)
+    {
+        try {
+            $employees = Employee::where('seller_id', $sellerId)->get();
+            return response()->json(['status' => 'success', 'data' => $employees]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    /******************************************************************************************/
 }

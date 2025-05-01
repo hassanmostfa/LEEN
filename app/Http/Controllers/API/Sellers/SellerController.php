@@ -41,8 +41,8 @@ class SellerController extends Controller
             ]);
 
             // Send email notification to admin
-            $adminEmail = 'hassan.elshiat@gmail.com';
-            Mail::to($adminEmail)->send(new AdminNotificationMail($seller));
+            // $adminEmail = 'hassan.elshiat@gmail.com';
+            // Mail::to($adminEmail)->send(new AdminNotificationMail($seller));
 
             return response()->json(['status' => 'success', 'message' => 'تم التسجيل بنجاح' ]);
         } catch (\Exception $e) {

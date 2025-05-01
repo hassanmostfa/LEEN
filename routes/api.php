@@ -18,6 +18,7 @@ use App\Http\Controllers\API\Sellers\CouponsController;
 use App\Http\Controllers\API\Sellers\ChatController;
 use App\Http\Controllers\API\Sellers\SellersTimetablesController;
 use App\Http\Controllers\API\Sellers\NotificationsController;
+use App\Http\Controllers\API\Sellers\ForgetPasswordController;
 
 use App\Http\Controllers\API\Customers\CustomerController;
 use App\Http\Controllers\API\Customers\ServicesController;
@@ -27,6 +28,8 @@ use App\Http\Controllers\API\Customers\RatingController;
 use App\Http\Controllers\API\Customers\CustomersCouponsController;
 use App\Http\Controllers\API\Customers\FavouritesController;
 use App\Http\Controllers\API\Customers\CustomerChatController;
+use App\Http\Controllers\API\Customers\ResetPasswordController;
+use App\Http\Controllers\API\Customers\CustomerNotificationsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -72,6 +75,11 @@ use App\Http\Controllers\API\Customers\CustomerChatController;
         Route::post('seller/login','sellerLogin'); // Login Seller
     });
 
+    Route::controller(ForgetPasswordController::class)->group(function () {
+        Route::post('seller/resetPasswordOtp','resetPasswordOtp'); // Send Reset Password OTP
+        Route::post('seller/verifyResetPasswordOtp','verifyResetPasswordOtp'); // Verify Reset Password OTP
+        Route::put('seller/resetPassword','resetPassword'); // Reset Password
+    });
     Route::middleware('auth:sanctum')->group( function () {
         // Seller Routes
         Route::controller(SellerController::class)->group(function () {
@@ -86,7 +94,7 @@ use App\Http\Controllers\API\Customers\CustomerChatController;
             Route::get('seller/employees','index'); // Get All Employees
             Route::get('seller/employees/{id}','show'); // Get Employee
             Route::post('seller/employees/store','store'); // Store New Employee
-            Route::put('seller/employees/update/{id}','update'); // Update Employee
+            Route::post('seller/employees/update/{id}','update'); // Update Employee
             Route::delete('seller/employees/destroy/{id}','destroy'); // Delete Employee
         });
 
@@ -187,6 +195,11 @@ use App\Http\Controllers\API\Customers\CustomerChatController;
         Route::post('customer/login','customerLogin'); // Login Customer
         });
 
+    Route::controller(ResetPasswordController::class)->group(function () {
+        Route::post('customer/resetPasswordOtp','resetPasswordOtp'); // Send Reset Password OTP
+        Route::post('customer/verifyResetPasswordOtp','verifyResetPasswordOtp'); // Verify Reset Password OTP
+        Route::put('customer/resetPassword','resetPassword'); // Reset Password
+    });
     Route::controller(ServicesController::class)->group(function () {
         Route::get('/seller/{sellerId}/active-weekdays', 'getSellerActiveWeekdays');// Get Working Days
         Route::post('/check-available-times','checkAvailableTimes');// check available times
@@ -195,14 +208,21 @@ use App\Http\Controllers\API\Customers\CustomerChatController;
         Route::get('customer/seller/studioServices/{sellerId}','getSellerStudioServices');// Get All Studio Services for a specific seller
         Route::get('/get-employees/{serviceId}','getEmployeesByService');// Get Related Employees By Home Service
         Route::get('/get-studio-employees/{serviceId}', 'getStudioEmployeesByService');// Get Related Employees By Studio Service
+        Route::get('/sellers','getSellers'); // Get All Sellers
+        Route::get('/seller/{id}/employees','getSellerEmployees'); // Get All Employees for a specific seller
     });
+
+    Route::controller(RatingController::class)->group(function () {
+        Route::get('customer/seller/rating/{sellerId}','getSellerRatings'); // Get All Ratings for a specific seller
+    });
+
 
     Route::middleware('auth:sanctum')->group( function () {
         Route::controller(CustomerController::class)->group(function () {
             Route::post('customer/logout','logout'); // Logout Customer
             Route::get('customer/info','show'); // Get Customer Info
             Route::post('customer/info/update/{id}','update'); // Update Customer Info
-            Route::get('customer/sellers','getCustomerSellers'); // Get All Sellers for the customer
+            Route::get('chat/sellers','chatSellers');
         });
 
         // Home Bookings Routes
@@ -211,6 +231,7 @@ use App\Http\Controllers\API\Customers\CustomerChatController;
             Route::post('customer/homeServices/book' , 'store'); // Book Home Service
             Route::put('customer/homeServices/update/{id}' , 'update'); // Update Home Service
             Route::post('customer/homeServices/addServiceToExistingBooking' , 'addServiceToExistingBooking'); // Add Service To Existing Booking
+            Route::put('customer/cancel/homeBooking/{id}' , 'cancelHomeBooking');
         });
 
         // Studio Bookings Routes
@@ -219,6 +240,7 @@ use App\Http\Controllers\API\Customers\CustomerChatController;
             Route::post('customer/studioServices/book' , 'store'); // Book Studio Service
             Route::put('customer/studioServices/update/{id}' , 'update'); // Update Studio Service
             Route::post('customer/studioServices/addServiceToExistingBooking' , 'addStudioServiceToExistingBooking'); // Add Service To Existing Booking
+            Route::put('customer/cancel/studioBooking/{id}' , 'cancelStudioBooking');
         });
 
         // Rating Routes
@@ -229,6 +251,7 @@ use App\Http\Controllers\API\Customers\CustomerChatController;
         // Customer Coupons Routes
         Route::controller(CustomersCouponsController::class)->group(function () {
             Route::get('customer/coupons' , 'index'); // Get All Customer Coupons
+            Route::post('customer/coupons/apply' , 'applyCoupon'); // Apply Coupon
         });
 
         // Favourites Routes
@@ -246,17 +269,26 @@ use App\Http\Controllers\API\Customers\CustomerChatController;
             Route::post('customer/chat/sendMessage','sendMessage'); // Store a new message in the chat session
         });
 
+        // Notifications Routes 
+        Route::controller(CustomerNotificationsController::class)->group(function () {
+            Route::get('/customer/notifications','index'); // Get All Notifications
+            Route::put('/customer/notifications/isRead','markAllAsRead'); // Update Notification 
+        });
+
     });
 /*==================================================================================*/
 
 Route::post('/broadcasting/auth', function (Request $request) {
+    \Log::info('Pusher auth request:', $request->all()); // Debug log ✅
+
     try {
         return Broadcast::auth($request);
     } catch (Exception $e) {
         \Log::error('Pusher auth error: ' . $e->getMessage());
         return response()->json(['error' => 'Authentication failed'], 500);
     }
-})->middleware('auth:sanctum'); // For Sellers
+})->middleware('auth:sanctum'); // ✅ Must be authenticated
+
 
 
 

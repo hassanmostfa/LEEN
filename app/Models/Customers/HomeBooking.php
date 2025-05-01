@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Sellers\HomeService;
 use App\Models\Sellers\Employee;
 use App\Models\Sellers\Seller;
-
 class HomeBooking extends Model
 {
     use HasFactory;
@@ -25,6 +24,8 @@ class HomeBooking extends Model
         'payment_status',
         'booking_status',
         'paid_amount',
+        'copoun_discount',
+        'service_discount',
     ];
 
     public function customer()

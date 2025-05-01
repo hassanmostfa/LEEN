@@ -27,6 +27,8 @@ class StudioBooking extends Model
         'payment_status',
         'booking_status',
         'paid_amount',
+        'copoun_discount',
+        'service_discount',
     ];
 
     public function customer()

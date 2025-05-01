@@ -11,6 +11,8 @@ use App\Http\Resources\HomeBookingResource;
 use App\Models\Customers\HomeBooking;
 use App\Models\Customers\CustomerPoint;
 use App\Models\Sellers\Timetable;
+use App\Models\Sellers\Employee;
+use App\Models\Notification;
 
 class HomeBookingsController extends Controller
 {
@@ -65,6 +67,21 @@ class HomeBookingsController extends Controller
             $homeBooking->booking_status = 'accepted';
             $homeBooking->save();
 
+            $employee = Employee::where('id', $homeBooking->employee_id)->first();
+            $date = $homeBooking->date;
+            $start_time = $homeBooking->start_time;
+
+            // Create a cancel notification for the seller
+            Notification::create([
+                'customer_id' => $homeBooking->customer_id,
+                'seller_id' => auth()->user()->id,
+                'title' => 'تم تأكيد حجزك بنجاح',
+                'sender_type' => 'seller',
+                'content' => 'موعدك مع الأخصائي' . ' ' . $employee->name . ' يوم ' . $date . ' الساعة ' . $start_time . '.',
+                'category' => 'booking',
+            ]);
+
+
             return response()->json(['success' => true,'message' => 'تم قبول الطلب بنجاح']);
         }catch(\Exception $e){
             return response()->json([ 'success' => false,'message' => $e->getMessage()]);
@@ -73,41 +90,58 @@ class HomeBookingsController extends Controller
 
     /***********************************************************************************/
     // Reject Home Booking
-    public function rejectHomeBooking(Request $request, $id){
-        try{
+    public function rejectHomeBooking(Request $request, $id)
+    {
+        try {
             $validator = Validator::make($request->all(), [
                 'request_rejection_reason' => 'required',
             ]);
-
+    
             if ($validator->fails()) {
-                return response()->json([ 'success' => false,'message' => $validator->errors()->first()]);
+                return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
             }
-
+    
             $homeBooking = HomeBooking::findOrFail($id);
-
-            if($homeBooking->seller_id != Auth::user()->id){
-                return response()->json([ 'success' => false,'message' => 'هذا الطلب ليس لك']);
+    
+            if ($homeBooking->seller_id != Auth::user()->id) {
+                return response()->json(['success' => false, 'message' => 'هذا الطلب ليس لك']);
             }
-
+    
             $homeBooking->booking_status = 'rejected';
             $homeBooking->request_rejection_reason = $request->request_rejection_reason;
             $homeBooking->save();   
-
-            // Remove employee from this time in employee time table
+    
+            // Remove employee from this time in employee timetable
             $timetable = Timetable::where('employee_id', $homeBooking->employee_id)
-            ->where('date', $homeBooking->date)
-            ->where('start_time', $homeBooking->start_time)
-            ->first();
-
+                ->where('date', $homeBooking->date)
+                ->where('start_time', $homeBooking->start_time)
+                ->first();
+    
             if ($timetable) {
                 $timetable->delete();
             }
-
-            return response()->json(['success' => true,'message' => 'تم رفض الطلب بنجاح']);
-        }catch(\Exception $e){
-            return response()->json([ 'success' => false,'message' => $e->getMessage()]);
+    
+            $employee = Employee::find($homeBooking->employee_id);
+            $date = $homeBooking->date;
+            $start_time = $homeBooking->start_time;
+            $reason = $request->request_rejection_reason;
+    
+            // Create a rejection notification for the customer
+            Notification::create([
+                'customer_id' => $homeBooking->customer_id,
+                'seller_id' => auth()->user()->id,
+                'title' => 'تم رفض الحجز',
+                'sender_type' => 'seller',
+                'content' => 'نعتذر، تم رفض موعدك مع الأخصائي ' . $employee->name . ' يوم ' . $date . ' الساعة ' . $start_time . '. بسبب ان : ' . $reason,
+                'category' => 'booking',
+            ]);
+    
+            return response()->json(['success' => true, 'message' => 'تم رفض الطلب بنجاح']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
+    
     /***********************************************************************************/
     // get all refused home bookings
     public function getRefusedHomeBookings(){

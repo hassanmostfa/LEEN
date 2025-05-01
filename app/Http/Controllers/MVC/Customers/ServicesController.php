@@ -12,7 +12,7 @@ use App\Models\Customers\HomeBooking;
 use App\Models\Customers\StudioBooking;
 use App\Models\Sellers\HomeService;
 use App\Models\Sellers\StudioService;
-
+use App\Models\Sellers\Seller;
 use App\Models\Sellers\Employee;
 
 class ServicesController extends Controller

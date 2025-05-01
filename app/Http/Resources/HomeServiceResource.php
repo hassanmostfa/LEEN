@@ -28,12 +28,12 @@ class HomeServiceResource extends JsonResource
         $employeeIds = json_decode($this->employees); // Decoding the JSON string to get the array of employee IDs
     
         // Assuming you have an Employee model and the IDs are stored in the 'employees' attribute
-        $employees = \App\Models\Sellers\Employee::whereIn('id', $employeeIds)->get(['id', 'name']);
+        $employees = \App\Models\Sellers\Employee::whereIn('id', $employeeIds)->get(['id', 'name' , 'position']);
     
         // Return the transformed data
         return [
             'id' => $this->id,
-            'seller' => ['id' => $this->seller->id, 'first_name' => $this->seller->first_name, 'last_name' => $this->seller->last_name, 'seller_logo' => url($this->seller->seller_logo), 'seller_banner' => url($this->seller->seller_banner)],
+            'seller' => ['id' => $this->seller->id, 'first_name' => $this->seller->first_name, 'last_name' => $this->seller->last_name, 'seller_logo' => url($this->seller->seller_logo), 'seller_banner' => url($this->seller->seller_banner) , 'location' => $this->seller->location],
             'category' => ['id' => $this->category->id, 'name' => $this->category->name,'image' => url($this->category->image)],
             'sub_category' => ['id' => $this->subCategory->id, 'name' => $this->subCategory->name,'image' => url($this->subCategory->image)],
             'name' => $this->name,

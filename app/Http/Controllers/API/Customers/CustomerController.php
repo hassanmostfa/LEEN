@@ -49,11 +49,11 @@ class CustomerController extends Controller
                 $customer->save();
 
                 //send email to admin that a new customer has registered
-                $adminEmail = 'hassan.elshiat@gmail.com'; //  Admin Email
-                Mail::to($adminEmail)->send(new NewCustomerAdminNotificationMail($customer));
+                // $adminEmail = 'hassan.elshiat@gmail.com'; //  Admin Email
+                // Mail::to($adminEmail)->send(new NewCustomerAdminNotificationMail($customer));
 
                 // Send welcome email to the customer
-                Mail::to($customer->email)->send(new WelcomCustomerNotificationMail($customer));
+                // Mail::to($customer->email)->send(new WelcomCustomerNotificationMail($customer));
 
             return response()->json(['status' => 'success', 'message' => 'تم التسجيل بنجاح' ]);
         } catch (\Exception $e) {
@@ -171,49 +171,68 @@ public function update(Request $request, $id){
 }
 
 /*****************************************************************************************/
-// get all sellers for the customer
-public function getCustomerSellers()
-{
-    $customerId = Auth::guard('customer')->user()->id;
+// test function
+public function chatSellers(){
+            // Get authenticated customer
+            $customer = Auth::user();
+            if (!$customer) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Unauthenticated'
+                ], 401);
+            }
+    
+            // Step 1: Retrieve seller IDs from both bookings tables
+            $homeServiceSellerIds = HomeBooking::where('customer_id', $customer->id)
+                ->pluck('seller_id')
+                ->toArray();
+    
+            $studioServiceSellerIds = StudioBooking::where('customer_id', $customer->id)
+                ->pluck('seller_id')
+                ->toArray();
+    
+            // Combine both seller IDs into a unique list
+            $sellerIds = array_unique(array_merge($homeServiceSellerIds, $studioServiceSellerIds));
+    
+             // If no sellers found
+        if (empty($sellerIds)) {
+            return response()->json([
+                'status' => 'success',
+                'data' => [],
+                'message' => 'No sellers found for this customer'
+            ]);
+        }
 
-    // Step 1: Retrieve seller IDs from both bookings tables
-    $homeServiceSellerIds = HomeBooking::where('customer_id', $customerId)
-        ->pluck('seller_id')
-        ->toArray();
+        // Step 2: Retrieve seller information
+        $sellers = Seller::whereIn('id', $sellerIds)->get();
 
-    $studioServiceSellerIds = StudioBooking::where('customer_id', $customerId)
-        ->pluck('seller_id')
-        ->toArray();
+   
+        // Step 3: Add chat details for each seller
+        $sellersWithChatDetails = $sellers->map(function ($seller) use ($customer) {
+            $chatRoom = ChatRoom::where('customer_id', $customer->id)
+                ->where('seller_id', $seller->id)
+                ->with(['messages' => function ($query) {
+                    $query->orderBy('created_at', 'desc')->limit(1);
+                }])
+                ->withCount(['messages as unread_messages_count' => function ($query) {
+                    $query->where('is_read', false)
+                          ->where('sender_type', '!=', 'App\Models\Customers\Customer');
+                }])
+                ->first();
 
-    // Combine both seller IDs into a unique list
-    $sellerIds = array_unique(array_merge($homeServiceSellerIds, $studioServiceSellerIds));
+            $latestMessage = $chatRoom ? $chatRoom->messages->first() : null;
+            $unreadCount = $chatRoom ? $chatRoom->unread_messages_count : 0;
 
-    // Step 2: Retrieve seller information
-    $sellers = Seller::whereIn('id', $sellerIds)->get();
+            return [
+                'seller' => new SellerResource($seller), // Use your SellerResource
+                'latestMessage' => $latestMessage,
+                'unreadCount' => $unreadCount,
+            ];
+        });
 
-    // Step 3: Add chat details for each seller
-    $sellersWithChatDetails = $sellers->map(function ($seller) use ($customerId) {
-        $chatRoom = ChatRoom::where('customer_id', $customerId)
-            ->where('seller_id', $seller->id)
-            ->with(['messages' => function ($query) {
-                $query->orderBy('created_at', 'desc')->limit(1);
-            }])
-            ->withCount(['messages as unread_messages_count' => function ($query) use ($customerId) {
-                $query->where('is_read', false)
-                      ->where('sender_type', '!=', 'App\Models\Customers\Customer');
-            }])
-            ->first();
-
-        $latestMessage = $chatRoom ? $chatRoom->messages->first() : null;
-        $unreadCount = $chatRoom ? $chatRoom->unread_messages_count : 0;
-
-        return [
-            'seller' => new SellerResource($seller),
-            'latestMessage' => $latestMessage,
-            'unreadCount' => $unreadCount,
-        ];
-    });
-
-    return response()->json(['status' => 'success', 'data' => $sellersWithChatDetails]);
+        return response()->json([
+            'status' => 'success',
+            'data' => $sellersWithChatDetails
+        ]);
 }
 }

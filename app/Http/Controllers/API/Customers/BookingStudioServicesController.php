@@ -11,7 +11,7 @@ use App\Models\Customers\StudioBooking;
 use App\Models\Sellers\Employee;
 use App\Models\Sellers\Timetable;
 use App\Models\Customers\StudioServiceBookingItem;
-
+use App\Models\Notification;
 class BookingStudioServicesController extends Controller
 {
     // get all booking studio services
@@ -56,6 +56,8 @@ class BookingStudioServicesController extends Controller
             'start_time' => $request->start_time,
             'paid_amount' => $request->paid_amount,
             'location' => $request->location,
+            'copoun_discount' => $request->copoun_discount ?? 0,
+            'service_discount' => $request->service_discount ?? 0,
         ]);
     
         // Create Timetable record for the selected employee
@@ -66,6 +68,16 @@ class BookingStudioServicesController extends Controller
             'start_time' => $request->start_time,
             'status' => 'busy',
         ]);
+
+                // Create a notification for the seller
+                Notification::create([
+                    'customer_id' => auth()->user()->id,
+                    'seller_id' => $request->seller_id,
+                    'title' => 'حجز جديد بالمقر',
+                    'sender_type' => 'customer',
+                    'content' => 'لديك حجز جديد من العميل ' . auth()->user()->first_name . ' ' . auth()->user()->last_name . ' للموعد ' . $request->booking_date . '. يرجى تأكيد الحجز.',
+                    'category' => 'booking',
+                ]);
 
         return response()->json([
             'success' => true,
@@ -150,5 +162,25 @@ if ($timetable) {
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    /********************************************************************************************/
+    // Cancel booking studio service
+
+    public function cancelStudioBooking($id){
+        $studioBooking = StudioBooking::findOrFail($id);
+        $studioBooking->booking_status = 'cancelled';
+        $studioBooking->save();
+
+        // Create a cancel notification for the seller
+        Notification::create([
+        'customer_id' => auth()->user()->id,
+        'seller_id' => $studioBooking->seller_id,
+        'title' => 'تم الغاء حجز بالمقر',
+        'sender_type' => 'customer',
+        'content' => 'لقد قام العميل ' . auth()->user()->first_name . ' ' . auth()->user()->last_name . ' بإلغاء الحجز الذي كان محددًا للموعد ' . $studioBooking->booking_date . ' في الساعة ' . $studioBooking->start_time . '.',
+        'category' => 'booking',
+    ]);
+        return response()->json(['message' => 'تم الغاء الحجز بنجاح'], 200);
     }
 }
